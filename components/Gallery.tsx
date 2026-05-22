@@ -43,7 +43,7 @@ export default function Gallery() {
 						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-3">
 							Gallery
 						</p>
-						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug">
+						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug title-underline">
 							Life on the water
 						</h2>
 					</div>

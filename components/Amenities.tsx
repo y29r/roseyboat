@@ -22,7 +22,7 @@ export default function Amenities() {
 						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
 							Practical Info
 						</p>
-						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug mb-6">
+						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug mb-6 title-underline">
 							A comfortable stay, simply equipped
 						</h2>
 						<p className="font-sans text-muted text-base lg:text-lg leading-relaxed font-light">

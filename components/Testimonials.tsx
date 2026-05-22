@@ -65,7 +65,7 @@ export default function Testimonials() {
 						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
 							Guest Reviews
 						</p>
-						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug">
+						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug title-underline">
 							Stories from the water
 						</h2>
 					</div>
