@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		background-color: #F5F1E8;
+		color: #2B2B2B;
+		font-family: var(--font-manrope), system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-cormorant), Georgia, serif;
+	}
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+}
+
+/* ── Scroll-driven image parallax ──────────────────────────────────────────
+ * Uses the CSS Scroll-Driven Animations API (Chrome 115+, Firefox 114+,
+ * Safari 16.4+ — all 2023). Runs on the compositor: zero JS, zero jank.
+ *
+ * How it works:
+ *   .parallax-container  defines a named ViewTimeline attached to itself.
+ *   .parallax-inner      consumes that timeline: translateY(50px) when the
+ *                        container enters the viewport from below, drifting
+ *                        to translateY(-50px) as it exits above.
+ *   The inner div is 100px taller than its container (50px overhang each
+ *   side) so the image always fills the frame — no gap ever shows.
+ * ────────────────────────────────────────────────────────────────────── */
+
+@keyframes image-parallax {
+	from {
+		transform: translateY(100px);
+	}
+
+	to {
+		transform: translateY(-100px);
+	}
+}
+
+.parallax-container {
+	view-timeline-name: --image-scroll;
+	view-timeline-axis: block;
+}
+
+.parallax-inner {
+	animation: image-parallax linear both;
+	animation-timeline: --image-scroll;
+	animation-range: cover;
+	will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.parallax-inner {
+		animation: none;
+		transform: none;
+	}
+}
+
+/* ── Scroll reveal ── */
+@keyframes reveal-left {
+	from {
+		opacity: 0;
+		transform: translateX(-48px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes reveal-right {
+	from {
+		opacity: 0;
+		transform: translateX(48px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes reveal-up {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@supports (animation-timeline: view()) {
+	.reveal-left {
+		animation: reveal-left linear both;
+		animation-timeline: view();
+		animation-range: entry 0% entry 100%;
+	}
+
+	.reveal-right {
+		animation: reveal-right linear both;
+		animation-timeline: view();
+		animation-range: entry 0% entry 100%;
+	}
+
+	.reveal-up {
+		animation: reveal-up linear both;
+		animation-timeline: view();
+		animation-range: entry 0% entry 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+
+		.reveal-left,
+		.reveal-right,
+		.reveal-up {
+			animation: none;
+		}
+	}
+}
