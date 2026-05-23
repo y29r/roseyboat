@@ -1,8 +1,6 @@
 const features = [
 	"Sleeps 2–4",
 	"Shower & Toilet",
-	"Air Conditioning",
-	"Wi-Fi",
 	"Cyclist Friendly",
 	"Kitchen Included",
 ];
@@ -28,18 +26,18 @@ export default function Features() {
 				{/* Mobile: two compact rows */}
 				<div className="sm:hidden flex flex-col gap-2 items-center">
 					<ul className="flex items-center gap-x-0">
-						{features.slice(0, 3).map((label, i) => (
+						{features.slice(0, 2).map((label, i) => (
 							<li key={label} className="flex items-center">
 								<span className="font-sans text-xs text-dark/60 font-light">{label}</span>
-								{i < 2 && <span className="mx-3 text-beige select-none" aria-hidden>·</span>}
+								{i < 1 && <span className="mx-3 text-beige select-none" aria-hidden>·</span>}
 							</li>
 						))}
 					</ul>
 					<ul className="flex items-center gap-x-0">
-						{features.slice(3).map((label, i) => (
+						{features.slice(2).map((label, i) => (
 							<li key={label} className="flex items-center">
 								<span className="font-sans text-xs text-dark/60 font-light">{label}</span>
-								{i < features.slice(3).length - 1 && (
+								{i < features.slice(2).length - 1 && (
 									<span className="mx-3 text-beige select-none" aria-hidden>·</span>
 								)}
 							</li>

@@ -43,17 +43,24 @@ function AvailabilityCalendar() {
 	const today = new Date();
 	const [viewYear, setViewYear] = useState(today.getFullYear());
 	const [viewMonth, setViewMonth] = useState(today.getMonth());
+	const [calDir, setCalDir] = useState<"forward" | "backward" | null>(null);
 
 	const cells = getDaysInMonth(viewYear, viewMonth);
 
 	const prev = () => {
+		setCalDir("backward");
 		if (viewMonth === 0) { setViewYear(y => y - 1); setViewMonth(11); }
 		else setViewMonth(m => m - 1);
 	};
 	const next = () => {
+		setCalDir("forward");
 		if (viewMonth === 11) { setViewYear(y => y + 1); setViewMonth(0); }
 		else setViewMonth(m => m + 1);
 	};
+
+	const gridAnimClass =
+		calDir === "forward" ? "animate-slide-in-right" :
+			calDir === "backward" ? "animate-slide-in-left" : "";
 
 	return (
 		<div className="select-none">
@@ -82,7 +89,7 @@ function AvailabilityCalendar() {
 				</button>
 			</div>
 
-			{/* Day headers */}
+			{/* Day headers — stable, never animates */}
 			<div className="grid grid-cols-7 mb-2">
 				{DAYS.map(d => (
 					<div key={d} className="text-center font-sans text-xs text-muted font-medium py-1">
@@ -91,8 +98,11 @@ function AvailabilityCalendar() {
 				))}
 			</div>
 
-			{/* Date cells */}
-			<div className="grid grid-cols-7 gap-y-1">
+			{/* Date cells — key triggers remount → slide animation */}
+			<div
+				key={`${viewYear}-${viewMonth}`}
+				className={`grid grid-cols-7 gap-y-1 overflow-hidden ${gridAnimClass}`}
+			>
 				{cells.map((date, i) => {
 					if (!date) return <div key={`empty-${i}`} />;
 					const booked = isBooked(date);

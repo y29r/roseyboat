@@ -5,6 +5,11 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		scrollbar-gutter: stable;
+		/* Prevent scroll-driven translateX from contributing to the scroll area.
+		   Unlike overflow:hidden, clip is NOT propagated to the viewport,
+		   so position:fixed elements are unaffected. */
+		overflow-x: clip;
 	}
 
 	body {
@@ -12,6 +17,9 @@
 		color: #2B2B2B;
 		font-family: var(--font-manrope), system-ui, sans-serif;
 		-webkit-font-smoothing: antialiased;
+		/* Clip translated elements (reveal animations) so they never
+		   cause horizontal overflow or a horizontal scrollbar */
+		overflow-x: clip;
 	}
 
 	h1,
@@ -61,7 +69,7 @@
 @keyframes reveal-left {
 	from {
 		opacity: 0;
-		transform: translateX(-86px);
+		transform: translateX(-28px);
 	}
 
 	to {
@@ -73,7 +81,7 @@
 @keyframes reveal-right {
 	from {
 		opacity: 0;
-		transform: translateX(86px);
+		transform: translateX(28px);
 	}
 
 	to {
@@ -85,7 +93,7 @@
 @keyframes reveal-up {
 	from {
 		opacity: 0;
-		transform: translateY(86px);
+		transform: translateY(28px);
 	}
 
 	to {

@@ -13,6 +13,7 @@ export default function Navbar() {
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [activeSection, setActiveSection] = useState("");
+	const [lang, setLang] = useState<"EN" | "FR">("EN");
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 60);
@@ -64,12 +65,12 @@ export default function Navbar() {
 								key={link.href}
 								href={link.href}
 								className={`text-sm font-sans font-medium tracking-wide transition-colors duration-300 ${scrolled
-										? isActive
-											? "text-canal-green"
-											: "text-dark hover:text-canal-green"
-										: isActive
-											? "text-white"
-											: "text-white/80 hover:text-white"
+									? isActive
+										? "text-canal-green"
+										: "text-dark hover:text-canal-green"
+									: isActive
+										? "text-white"
+										: "text-white/80 hover:text-white"
 									}`}
 							>
 								{link.label}
@@ -88,13 +89,36 @@ export default function Navbar() {
 					>
 						Check Availability
 					</a>
+
+					{/* Language toggle */}
+					<div className={`flex items-center gap-1.5 pl-4 border-l ${scrolled ? "border-beige/60" : "border-white/20"}`}>
+						<button
+							onClick={() => setLang("EN")}
+							className={`font-sans text-xs tracking-widest transition-colors duration-300 ${lang === "EN"
+								? scrolled ? "text-dark" : "text-white"
+								: scrolled ? "text-muted hover:text-dark" : "text-white/40 hover:text-white"
+								}`}
+						>
+							EN
+						</button>
+						<span className={`text-xs select-none ${scrolled ? "text-beige" : "text-white/25"}`} aria-hidden>|</span>
+						<button
+							onClick={() => setLang("FR")}
+							className={`font-sans text-xs tracking-widest transition-colors duration-300 ${lang === "FR"
+								? scrolled ? "text-dark" : "text-white"
+								: scrolled ? "text-muted hover:text-dark" : "text-white/40 hover:text-white"
+								}`}
+						>
+							FR
+						</button>
+					</div>
 				</nav>
 
 				{/* Mobile hamburger */}
 				<button
 					onClick={() => setMenuOpen(!menuOpen)}
 					aria-label="Toggle menu"
-					className={`md:hidden flex flex-col gap-1.5 p-2 transition-colors duration-300 ${scrolled ? "text-dark" : "text-white"
+					className={`md:hidden flex flex-col flex-shrink-0 gap-1.5 p-2 transition-colors duration-300 ${scrolled ? "text-dark" : "text-white"
 						}`}
 				>
 					<span
@@ -114,7 +138,7 @@ export default function Navbar() {
 
 			{/* Mobile menu */}
 			<div
-				className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+				className={`md:hidden overflow-hidden transition-all duration-300 ${menuOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
 					} bg-cream border-t border-beige/40`}
 			>
 				<nav className="flex flex-col px-6 py-4 gap-4">
@@ -124,8 +148,8 @@ export default function Navbar() {
 							href={link.href}
 							onClick={() => setMenuOpen(false)}
 							className={`font-sans text-base font-medium py-2 border-b border-beige/30 transition-colors ${activeSection === link.href.slice(1)
-									? "text-canal-green"
-									: "text-dark hover:text-canal-green"
+								? "text-canal-green"
+								: "text-dark hover:text-canal-green"
 								}`}
 						>
 							{link.label}
@@ -138,6 +162,28 @@ export default function Navbar() {
 					>
 						Check Availability
 					</a>
+
+					{/* Language toggle */}
+					<div className="flex items-center gap-3 pt-3 mt-1 border-t border-beige/30">
+						<span className="font-sans text-xs text-muted">Language</span>
+						<div className="flex items-center gap-1.5">
+							<button
+								onClick={() => setLang("EN")}
+								className={`font-sans text-xs tracking-widest transition-colors ${lang === "EN" ? "text-canal-green font-semibold" : "text-muted hover:text-dark"
+									}`}
+							>
+								EN
+							</button>
+							<span className="text-xs text-beige select-none" aria-hidden>|</span>
+							<button
+								onClick={() => setLang("FR")}
+								className={`font-sans text-xs tracking-widest transition-colors ${lang === "FR" ? "text-canal-green font-semibold" : "text-muted hover:text-dark"
+									}`}
+							>
+								FR
+							</button>
+						</div>
+					</div>
 				</nav>
 			</div>
 		</header>

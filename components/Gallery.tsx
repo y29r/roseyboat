@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import ParallaxImage from "./ParallaxImage";
 
 const photos = [
@@ -34,6 +36,8 @@ const photos = [
 ];
 
 export default function Gallery() {
+	const [expanded, setExpanded] = useState(false);
+
 	return (
 		<section id="gallery" className="py-20 lg:py-32 bg-white">
 			<div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -52,8 +56,14 @@ export default function Gallery() {
 					</p>
 				</div>
 
-				{/* Masonry grid – desktop */}
-				<div className="hidden md:grid grid-cols-4 gap-4" style={{ gridTemplateRows: "200px 200px 200px" }}>
+				{/* Desktop masonry grid — max-height clips to 2 rows initially */}
+				<div
+					className="hidden md:grid grid-cols-4 gap-4 overflow-hidden transition-[max-height] duration-700 ease-in-out"
+					style={{
+						gridTemplateRows: "200px 200px 200px",
+						maxHeight: expanded ? "640px" : "416px",
+					}}
+				>
 					{photos.map((photo) => (
 						<ParallaxImage
 							key={photo.src}
@@ -65,9 +75,9 @@ export default function Gallery() {
 					))}
 				</div>
 
-				{/* Simple grid – mobile */}
+				{/* Mobile grid — show 4 initially */}
 				<div className="md:hidden grid grid-cols-2 gap-3">
-					{photos.map((photo) => (
+					{(expanded ? photos : photos.slice(0, 4)).map((photo) => (
 						<ParallaxImage
 							key={photo.src}
 							src={photo.src}
@@ -77,7 +87,29 @@ export default function Gallery() {
 						/>
 					))}
 				</div>
+
+				{/* Expand / collapse */}
+				<div className="flex justify-center mt-8">
+					<button
+						onClick={() => setExpanded((e) => !e)}
+						className="group flex items-center gap-2 font-sans text-sm text-muted hover:text-dark tracking-wide transition-colors duration-300"
+					>
+						{expanded ? "Show less" : "View full gallery"}
+						<svg
+							className={`w-3.5 h-3.5 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+							fill="none"
+							stroke="currentColor"
+							strokeWidth={2}
+							viewBox="0 0 24 24"
+							aria-hidden
+						>
+							<path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+						</svg>
+					</button>
+				</div>
 			</div>
 		</section>
 	);
 }
+
+
