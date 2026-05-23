@@ -1,3 +1,6 @@
+"use client";
+import { useState, useEffect, useCallback } from "react";
+
 const reviews = [
 	{
 		quote:
@@ -45,7 +48,7 @@ const reviews = [
 
 function Stars({ count }: { count: number }) {
 	return (
-		<div className="flex gap-0.5">
+		<div className="flex gap-1">
 			{Array.from({ length: count }).map((_, i) => (
 				<svg key={i} className="w-3.5 h-3.5 text-canal-green" viewBox="0 0 20 20" fill="currentColor">
 					<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -56,19 +59,29 @@ function Stars({ count }: { count: number }) {
 }
 
 export default function Testimonials() {
+	const [active, setActive] = useState(0);
+
+	const advance = useCallback(() => {
+		setActive((i) => (i + 1) % reviews.length);
+	}, []);
+
+	useEffect(() => {
+		const t = setInterval(advance, 6500);
+		return () => clearInterval(t);
+	}, [advance]);
+
+	const n = reviews.length;
+	const previewIndices = [1, 2, 3].map((offset) => (active + offset) % n);
+
 	return (
-		<section id="testimonials" className="py-20 lg:py-32 bg-white">
-			<div className="max-w-7xl mx-auto px-6 lg:px-10">
+		<section id="testimonials" className="py-20 lg:py-32 bg-[#EFECE4] overflow-hidden">
+			<div className="max-w-4xl mx-auto px-6 lg:px-10">
+
 				{/* Header */}
-				<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
-					<div>
-						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
-							Guest Reviews
-						</p>
-						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug title-underline">
-							Stories from the water
-						</h2>
-					</div>
+				<div className="flex flex-col items-center text-center mb-16">
+					<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-5">
+						Guest Reviews
+					</p>
 					<div className="flex items-center gap-3">
 						<Stars count={5} />
 						<span className="font-sans text-sm text-muted">
@@ -77,29 +90,78 @@ export default function Testimonials() {
 					</div>
 				</div>
 
-				{/* Review grid */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-					{reviews.map((r) => (
-						<div
-							key={r.name}
-							className="bg-cream rounded-2xl border border-beige/50 p-6 lg:p-7 flex flex-col gap-4 hover:shadow-sm transition-shadow duration-300"
+				{/* Featured quote */}
+				<div className="relative">
+					{/* Large decorative opening quote */}
+					<span
+						className="absolute -top-12 -left-2 lg:-left-6 font-serif text-[9rem] lg:text-[13rem] leading-none text-canal-green/[0.08] select-none pointer-events-none"
+						aria-hidden
+					>
+						&ldquo;
+					</span>
+
+					{/* Quote text — key forces re-mount → triggers fade-in animation */}
+					<div className="relative z-10 text-center px-2 lg:px-12">
+						<blockquote
+							key={active}
+							className="font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance animate-fade-in"
 						>
-							<Stars count={r.rating} />
-							<blockquote className="font-serif text-dark text-lg lg:text-xl font-light leading-snug flex-1">
-								"{r.quote}"
-							</blockquote>
-							<div className="flex items-center gap-2 pt-2 border-t border-beige/50">
-								<div className="w-8 h-8 rounded-full bg-canal-green/15 flex items-center justify-center text-canal-green font-serif font-medium text-sm">
-									{r.name[0]}
-								</div>
-								<div>
-									<p className="font-sans text-sm font-semibold text-dark leading-none mb-0.5">{r.name}</p>
-									<p className="font-sans text-xs text-muted">{r.country}</p>
-								</div>
-							</div>
+							&ldquo;{reviews[active].quote}&rdquo;
+						</blockquote>
+					</div>
+
+					{/* Author attribution */}
+					<div className="flex flex-col items-center mt-10 gap-3">
+						<div className="w-px h-8 bg-beige" />
+						<div className="text-center">
+							<p className="font-sans text-sm font-semibold text-dark tracking-wide">
+								{reviews[active].name}
+							</p>
+							<p className="font-sans text-xs text-muted mt-1 tracking-widest uppercase">
+								{reviews[active].country}
+							</p>
 						</div>
+					</div>
+				</div>
+
+				{/* Navigation dots */}
+				<div className="flex items-center justify-center gap-2.5 mt-10" role="tablist">
+					{reviews.map((_, i) => (
+						<button
+							key={i}
+							role="tab"
+							aria-selected={i === active}
+							aria-label={`Review ${i + 1}`}
+							onClick={() => setActive(i)}
+							className={`rounded-full transition-all duration-500 ${i === active
+									? "w-7 h-1.5 bg-canal-green"
+									: "w-1.5 h-1.5 bg-beige hover:bg-canal-green/40"
+								}`}
+						/>
 					))}
 				</div>
+
+				{/* Preview strip — 3 other quotes, clickable */}
+				<div className="mt-14 pt-10 border-t border-beige/60 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
+					{previewIndices.map((idx) => {
+						const r = reviews[idx];
+						return (
+							<button
+								key={r.name}
+								onClick={() => setActive(idx)}
+								className="text-left group"
+							>
+								<p className="font-serif text-dark/45 text-sm leading-relaxed line-clamp-2 group-hover:text-dark/75 transition-colors duration-200">
+									&ldquo;{r.quote}&rdquo;
+								</p>
+								<p className="font-sans text-xs text-muted mt-2 group-hover:text-canal-green transition-colors duration-200">
+									— {r.name}, {r.country}
+								</p>
+							</button>
+						);
+					})}
+				</div>
+
 			</div>
 		</section>
 	);

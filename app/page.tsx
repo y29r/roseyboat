@@ -10,10 +10,13 @@ import Testimonials from "@/components/Testimonials";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
 import MobileStickyCta from "@/components/MobileStickyCta";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
+import BackToTop from "@/components/BackToTop";
 
 export default function Home() {
 	return (
 		<main>
+			<ScrollProgressBar />
 			<Navbar />
 			<Hero />
 			<Features />
@@ -26,6 +29,7 @@ export default function Home() {
 			<CtaSection />
 			<Footer />
 			<MobileStickyCta />
+			<BackToTop />
 		</main>
 	);
 }
