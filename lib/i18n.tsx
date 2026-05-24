@@ -73,22 +73,25 @@ export type Translations = {
 	amenities: {
 		label: string;
 		heading: string;
-		desc1: string;
-		desc2: string;
-		includedLabel: string;
-		items: Array<{ label: string; detail: string }>;
+		intro: string;
+		groups: Array<{
+			label: string;
+			items: Array<{ label: string; detail: string }>;
+		}>;
+		detailsLabel: string;
+		details: Array<{ question: string; answer: string }>;
 	};
 	location: {
 		label: string;
 		heading: string;
-		mooringHeading: string;
-		mooringText1: string;
-		mooringText2: string;
-		nearbyLabel: string;
-		cyclingLabel: string;
+		intro: string;
+		quicklook: string[];
 		privacyNote: string;
+		tabs: { nearby: string; cycling: string; dayTrips: string };
 		nearby: Array<{ label: string; detail: string }>;
-		cycling: string[];
+		cycling: Array<{ direction: string; label: string; detail: string }>;
+		cyclingNotes: string[];
+		dayTrips: Array<{ label: string; detail: string }>;
 	};
 	testimonials: {
 		label: string;
@@ -203,47 +206,90 @@ const dictionary: Record<Language, Translations> = {
 		amenities: {
 			label: "Practical Info",
 			heading: "A comfortable stay, simply equipped",
-			desc1:
-				"Everything needed for a peaceful few days on the water — nothing excessive, nothing missing. The boat is compact by nature, but thoughtfully fitted out for comfort in all seasons.",
-			desc2:
-				"Cyclists are particularly well catered for, with secure storage and direct access to the Canal du Midi greenway from the mooring.",
-			includedLabel: "Included during your stay",
-			items: [
-				{ label: "Heating", detail: "Diesel heating for cooler months" },
-				{ label: "Towels & linen", detail: "Provided for all guests" },
-				{ label: "Kitchen", detail: "Hob, oven, and fridge — self-cater as you please" },
-				{ label: "Coffee & tea", detail: "Complimentary, with a French press on board" },
-				{ label: "Snacks & drinks", detail: "Crisps, something sweet, cold beers, and bottled water" },
-				{ label: "Bike storage", detail: "Secure lock points on the towpath" },
-				{ label: "Parking", detail: "Free, a short walk from the mooring" },
-				{ label: "Check-in", detail: "From 15:00 · self check-in by lockbox" },
-				{ label: "Check-out", detail: "Before 11:00" },
+			intro: "Everything needed for a comfortable few days on the water — nothing excessive, nothing missing.",
+			groups: [
+				{
+					label: "On board",
+					items: [
+						{ label: "Heating", detail: "Diesel, all seasons" },
+						{ label: "Linen & towels", detail: "Provided for all guests" },
+						{ label: "Kitchen", detail: "Hob, oven & fridge" },
+						{ label: "Coffee & tea", detail: "French press, complimentary" },
+						{ label: "Snacks & drinks", detail: "Beers, water & something sweet" },
+					],
+				},
+				{
+					label: "Access & logistics",
+					items: [
+						{ label: "Parking", detail: "Free, short walk from the mooring" },
+						{ label: "Bike storage", detail: "Secure lock points on the towpath" },
+						{ label: "Pets", detail: "Well-behaved pets are welcome on board" },
+					],
+				},
+				{
+					label: "Stay details",
+					items: [
+						{ label: "Check-in", detail: "From 15:00 · self check-in by lockbox" },
+						{ label: "Check-out", detail: "Before 11:00" },
+						{ label: "Privacy", detail: "Entirely private — no shared spaces" },
+					],
+				},
+			],
+			detailsLabel: "Need more details?",
+			details: [
+				{
+					question: "How does check-in work?",
+					answer: "Via a secure key lockbox from 15:00. Full instructions are sent after booking confirmation.",
+				},
+				{
+					question: "Is parking really free?",
+					answer: "Yes — a short walk from the mooring. Exact details are included in your booking confirmation.",
+				},
+				{
+					question: "Is the boat entirely private?",
+					answer: "Yes. La Vie En Rose is a privately listed vessel — no shared spaces, no other guests.",
+				},
+				{
+					question: "Are pets welcome?",
+					answer: "Well-behaved pets are welcome on board. The towpath is ideal for morning walks.",
+				},
+				{
+					question: "How do I make a booking?",
+					answer: "Via Airbnb for secure payment, or send a direct inquiry if you prefer.",
+				},
 			],
 		},
 		location: {
 			label: "Location",
 			heading: "Moored near Capestang on the Canal du Midi",
-			mooringHeading: "About the mooring",
-			mooringText1:
-				"La Vie En Rose is moored near Capestang — a small village on the Canal du Midi, surrounded by vineyards and garrigue, in the Hérault département of southern France.",
-			mooringText2:
-				"The canal here is quiet and unhurried. Capestang village is on foot. Béziers is a short ride east. The plane tree canopy is unbroken for miles in either direction.",
-			nearbyLabel: "Nearby",
-			cyclingLabel: "Cycling Access",
-			privacyNote:
-				"Exact mooring location is shared with guests after booking confirmation.",
+			intro: "The boat is moored near Capestang — a village of plane trees and stone lanes, edged by vine rows, on the quietest stretch of the Canal du Midi.",
+			quicklook: [
+				"Capestang village — on foot",
+				"Béziers — 20 km east",
+				"Canal du Midi towpath — direct access",
+				"Vineyards & weekly markets nearby",
+			],
+			tabs: { nearby: "Nearby", cycling: "Cycling", dayTrips: "Day Trips" },
+			privacyNote: "Exact mooring location is shared with guests after booking confirmation.",
 			nearby: [
 				{ label: "Capestang", detail: "Village bakery, café & weekly market — on foot" },
-				{ label: "Béziers", detail: "Historic city, covered market, Friday brocante — 20 km" },
-				{ label: "Narbonne", detail: "Roman city, canal du Midi junction — 30 km" },
-				{ label: "Carcassonne", detail: "Medieval citadel & vineyard routes — 55 km" },
-				{ label: "Colombiers", detail: "Canal locks, quiet towpath village — 8 km" },
+				{ label: "Colombiers", detail: "Canal locks & quiet towpath village — 8 km" },
+				{ label: "Béziers", detail: "Historic city, covered market & Friday brocante — 20 km" },
+				{ label: "Narbonne", detail: "Roman city & canal du Midi junction — 30 km" },
 			],
 			cycling: [
-				"Canal du Midi Greenway (EuroVelo 8) runs directly alongside",
-				"Flat, shaded towpath east to Béziers — approx. 20 km, all abilities",
-				"West toward Colombiers locks and the Tunnel de Malpas — a full day ride",
+				{ direction: "East", label: "Béziers", detail: "20 km · flat, shaded towpath" },
+				{ direction: "West", label: "Tunnel de Malpas", detail: "scenic all-day route via Colombiers locks" },
+			],
+			cyclingNotes: [
+				"EuroVelo 8 · direct towpath access from the mooring",
 				"Bike hire available in Béziers and Capestang village",
+			],
+			dayTrips: [
+				{ label: "Carcassonne", detail: "Medieval citadel & vineyard routes — 55 km" },
+				{ label: "Mediterranean coast", detail: "Sète, Agde & Cap d'Agde — 40–60 km" },
+				{ label: "Minerve", detail: "Perched village above the Gorges de la Cesse — 45 km" },
+				{ label: "Saint-Guilhem-le-Désert", detail: "Medieval village & gorge walk — 70 km" },
 			],
 		},
 		testimonials: {
@@ -360,47 +406,90 @@ const dictionary: Record<Language, Translations> = {
 		amenities: {
 			label: "Infos pratiques",
 			heading: "Un séjour confortable, simplement équipé",
-			desc1:
-				"Tout le nécessaire pour quelques jours tranquilles sur l'eau — rien d'excessif, rien de manquant. Le bateau est compact par nature, mais aménagé avec soin pour le confort en toutes saisons.",
-			desc2:
-				"Les cyclistes sont particulièrement bien accueillis, avec un rangement sécurisé et un accès direct à la véloroute du Canal du Midi depuis l'amarrage.",
-			includedLabel: "Inclus pendant votre séjour",
-			items: [
-				{ label: "Chauffage", detail: "Chauffage diesel pour les mois plus froids" },
-				{ label: "Serviettes & literie", detail: "Fournies pour tous les hôtes" },
-				{ label: "Cuisine", detail: "Plaques, four et réfrigérateur — cuisinez à votre guise" },
-				{ label: "Café & thé", detail: "Offerts, avec une cafetière à piston à bord" },
-				{ label: "Snacks & boissons", detail: "Chips, quelque chose de sucré, bières froides et eau en bouteille" },
-				{ label: "Rangement vélos", detail: "Points d'attache sécurisés sur le chemin de halage" },
-				{ label: "Parking", detail: "Gratuit, à quelques minutes à pied de l'amarrage" },
-				{ label: "Arrivée", detail: "Dès 15h00 · arrivée autonome par boîte à clés" },
-				{ label: "Départ", detail: "Avant 11h00" },
+			intro: "Tout le nécessaire pour quelques jours tranquilles sur l'eau — rien d'excessif, rien de manquant.",
+			groups: [
+				{
+					label: "À bord",
+					items: [
+						{ label: "Chauffage", detail: "Diesel, toutes saisons" },
+						{ label: "Linge & serviettes", detail: "Fournis pour tous les hôtes" },
+						{ label: "Cuisine", detail: "Plaques, four & réfrigérateur" },
+						{ label: "Café & thé", detail: "Cafetière à piston, offerts" },
+						{ label: "Snacks & boissons", detail: "Bières, eau & quelque chose de sucré" },
+					],
+				},
+				{
+					label: "Accès & logistique",
+					items: [
+						{ label: "Parking", detail: "Gratuit, à quelques minutes de l'amarrage" },
+						{ label: "Rangement vélos", detail: "Points d'attache sécurisés sur le halage" },
+						{ label: "Animaux", detail: "Bienvenus à bord" },
+					],
+				},
+				{
+					label: "Informations séjour",
+					items: [
+						{ label: "Arrivée", detail: "Dès 15h00 · boîte à clés autonome" },
+						{ label: "Départ", detail: "Avant 11h00" },
+						{ label: "Intimité", detail: "Entièrement privatif — aucun espace partagé" },
+					],
+				},
+			],
+			detailsLabel: "Plus de détails ?",
+			details: [
+				{
+					question: "Comment fonctionne l'arrivée ?",
+					answer: "Via une boîte à clés sécurisée dès 15h00. Les instructions complètes sont envoyées après confirmation de réservation.",
+				},
+				{
+					question: "Le parking est-il vraiment gratuit ?",
+					answer: "Oui — à quelques minutes de l'amarrage. Les détails exacts sont inclus dans votre confirmation de réservation.",
+				},
+				{
+					question: "Le bateau est-il entièrement privatif ?",
+					answer: "Oui. La Vie En Rose est une location privée — pas d'espaces partagés, pas d'autres voyageurs.",
+				},
+				{
+					question: "Les animaux sont-ils acceptés ?",
+					answer: "Les animaux bien tenus sont les bienvenus à bord. Le chemin de halage est idéal pour les promenades matinales.",
+				},
+				{
+					question: "Comment effectuer une réservation ?",
+					answer: "Via Airbnb pour un paiement sécurisé, ou envoyez une demande directe si vous préférez.",
+				},
 			],
 		},
 		location: {
 			label: "Localisation",
 			heading: "Amarré près de Capestang sur le Canal du Midi",
-			mooringHeading: "L'emplacement",
-			mooringText1:
-				"La Vie En Rose est amarrée près de Capestang — un petit village sur le Canal du Midi, entouré de vignobles et de garrigue, dans le département de l'Hérault en France.",
-			mooringText2:
-				"Le canal est ici calme et sans hâte. Le village de Capestang est accessible à pied. Béziers est à courte distance à vélo vers l'est. La voûte des platanes est ininterrompue sur des kilomètres.",
-			nearbyLabel: "Aux alentours",
-			cyclingLabel: "Accès vélo",
-			privacyNote:
-				"L'emplacement exact de l'amarrage est communiqué aux locataires après confirmation de la réservation.",
+			intro: "Le bateau est amarré près de Capestang — un village de platanes et de ruelles en pierre, bordé de vignes, sur le tronçon le plus calme du Canal du Midi.",
+			quicklook: [
+				"Village de Capestang — à pied",
+				"Béziers — 20 km à l'est",
+				"Chemin de halage du Canal du Midi — accès direct",
+				"Vignobles & marchés hebdomadaires à proximité",
+			],
+			tabs: { nearby: "Alentours", cycling: "Vélo", dayTrips: "Excursions" },
+			privacyNote: "L'emplacement exact de l'amarrage est communiqué aux locataires après confirmation de la réservation.",
 			nearby: [
 				{ label: "Capestang", detail: "Boulangerie, café & marché hebdomadaire — à pied" },
-				{ label: "Béziers", detail: "Ville historique, marché couvert, brocante le vendredi — 20 km" },
-				{ label: "Narbonne", detail: "Ville romaine, jonction du Canal du Midi — 30 km" },
-				{ label: "Carcassonne", detail: "Citadelle médiévale & routes viticoles — 55 km" },
-				{ label: "Colombiers", detail: "Écluses du canal, village tranquille — 8 km" },
+				{ label: "Colombiers", detail: "Écluses du canal & village tranquille — 8 km" },
+				{ label: "Béziers", detail: "Ville historique, marché couvert & brocante — 20 km" },
+				{ label: "Narbonne", detail: "Ville romaine & jonction du Canal du Midi — 30 km" },
 			],
 			cycling: [
-				"La véloroute du Canal du Midi (EuroVelo 8) longe directement le bateau",
-				"Chemin de halage plat et ombragé vers Béziers — environ 20 km, tous niveaux",
-				"Vers l'ouest, les écluses de Colombiers et le Tunnel de Malpas — une journée entière",
+				{ direction: "Est", label: "Béziers", detail: "20 km · chemin de halage plat et ombragé" },
+				{ direction: "Ouest", label: "Tunnel de Malpas", detail: "circuit panoramique via les écluses de Colombiers" },
+			],
+			cyclingNotes: [
+				"EuroVelo 8 · accès direct au chemin de halage depuis l'amarrage",
 				"Location de vélos disponible à Béziers et au village de Capestang",
+			],
+			dayTrips: [
+				{ label: "Carcassonne", detail: "Cité médiévale & routes viticoles — 55 km" },
+				{ label: "Côte méditerranéenne", detail: "Sète, Agde & Cap d'Agde — 40–60 km" },
+				{ label: "Minerve", detail: "Village perché sur les Gorges de la Cesse — 45 km" },
+				{ label: "Saint-Guilhem-le-Désert", detail: "Village médiéval & randonnée dans les gorges — 70 km" },
 			],
 		},
 		testimonials: {
@@ -517,47 +606,90 @@ const dictionary: Record<Language, Translations> = {
 		amenities: {
 			label: "Ausstattung",
 			heading: "Ein komfortabler Aufenthalt, einfach ausgestattet",
-			desc1:
-				"Alles Notwendige für ein paar ruhige Tage auf dem Wasser — nichts Überflüssiges, nichts fehlt. Das Boot ist von Natur aus kompakt, aber in jeder Jahreszeit durchdacht für Komfort eingerichtet.",
-			desc2:
-				"Radfahrer werden besonders gut versorgt, mit sicherer Aufbewahrung und direktem Zugang zum Canal du Midi-Radweg vom Liegeplatz.",
-			includedLabel: "Im Aufenthalt inbegriffen",
-			items: [
-				{ label: "Heizung", detail: "Diesel-Heizung für kühlere Monate" },
-				{ label: "Handtücher & Bettwäsche", detail: "Für alle Gäste bereitgestellt" },
-				{ label: "Küche", detail: "Herd, Backofen und Kühlschrank — selbst kochen nach Belieben" },
-				{ label: "Kaffee & Tee", detail: "Kostenlos, mit einer French Press an Bord" },
-				{ label: "Snacks & Getränke", detail: "Chips, etwas Süßes, kalte Biere und Mineralwasser" },
-				{ label: "Fahrradaufbewahrung", detail: "Sichere Schlösser am Leinpfad" },
-				{ label: "Parkplatz", detail: "Kostenlos, kurzer Fußweg vom Liegeplatz" },
-				{ label: "Check-in", detail: "Ab 15:00 Uhr · Selbst-Check-in per Schlüsselbox" },
-				{ label: "Check-out", detail: "Vor 11:00 Uhr" },
+			intro: "Alles Notwendige für ein paar ruhige Tage auf dem Wasser — nichts Überflüssiges, nichts fehlt.",
+			groups: [
+				{
+					label: "An Bord",
+					items: [
+						{ label: "Heizung", detail: "Diesel, ganzjährig" },
+						{ label: "Bettwäsche & Handtücher", detail: "Für alle Gäste bereitgestellt" },
+						{ label: "Küche", detail: "Herd, Backofen & Kühlschrank" },
+						{ label: "Kaffee & Tee", detail: "French Press, kostenlos" },
+						{ label: "Snacks & Getränke", detail: "Biere, Wasser & etwas Süßes" },
+					],
+				},
+				{
+					label: "Zugang & Logistik",
+					items: [
+						{ label: "Parkplatz", detail: "Kostenlos, kurzer Fußweg vom Liegeplatz" },
+						{ label: "Fahrradaufbewahrung", detail: "Sichere Schlösser am Leinpfad" },
+						{ label: "Haustiere", detail: "An Bord willkommen" },
+					],
+				},
+				{
+					label: "Aufenthaltsdetails",
+					items: [
+						{ label: "Check-in", detail: "Ab 15:00 Uhr · Selbst-Check-in per Schlüsselbox" },
+						{ label: "Check-out", detail: "Vor 11:00 Uhr" },
+						{ label: "Privatsphäre", detail: "Vollständig privat — keine geteilten Bereiche" },
+					],
+				},
+			],
+			detailsLabel: "Noch Fragen?",
+			details: [
+				{
+					question: "Wie funktioniert der Check-in?",
+					answer: "Per Schlüsselbox ab 15:00 Uhr. Vollständige Anweisungen werden nach der Buchungsbestätigung zugesandt.",
+				},
+				{
+					question: "Ist der Parkplatz wirklich kostenlos?",
+					answer: "Ja — kurzer Fußweg vom Liegeplatz. Details sind in Ihrer Buchungsbestätigung enthalten.",
+				},
+				{
+					question: "Ist das Boot vollständig privat?",
+					answer: "Ja. La Vie En Rose ist ein privat vermietetes Boot — keine geteilten Bereiche, keine anderen Gäste.",
+				},
+				{
+					question: "Sind Haustiere willkommen?",
+					answer: "Gut erzogene Haustiere sind herzlich willkommen. Der Leinpfad ist ideal für Morgenrunden.",
+				},
+				{
+					question: "Wie buche ich?",
+					answer: "Über Airbnb für sichere Zahlung, oder senden Sie eine direkte Anfrage.",
+				},
 			],
 		},
 		location: {
 			label: "Lage",
 			heading: "Vertäut bei Capestang am Canal du Midi",
-			mooringHeading: "Über den Liegeplatz",
-			mooringText1:
-				"La Vie En Rose liegt bei Capestang — einem kleinen Dorf am Canal du Midi, umgeben von Weinbergen und Garrigue, im Département Hérault in Südfrankreich.",
-			mooringText2:
-				"Der Kanal ist hier ruhig und ohne Eile. Das Dorf Capestang ist zu Fuß erreichbar. Béziers liegt eine kurze Radfahrt östlich. Das Platanendach ist kilometerlang ununterbrochen.",
-			nearbyLabel: "In der Nähe",
-			cyclingLabel: "Radwege",
-			privacyNote:
-				"Der genaue Liegeplatz wird Gästen nach Buchungsbestätigung mitgeteilt.",
+			intro: "Das Boot liegt bei Capestang vertäut — einem Dorf aus Platanen und Steingassen, umgeben von Weinreben, am ruhigsten Abschnitt des Canal du Midi.",
+			quicklook: [
+				"Dorf Capestang — zu Fuß",
+				"Béziers — 20 km östlich",
+				"Canal du Midi-Leinpfad — direkter Zugang",
+				"Weinberge & Wochenmärkte in der Nähe",
+			],
+			tabs: { nearby: "Umgebung", cycling: "Radfahren", dayTrips: "Ausflüge" },
+			privacyNote: "Der genaue Liegeplatz wird Gästen nach Buchungsbestätigung mitgeteilt.",
 			nearby: [
 				{ label: "Capestang", detail: "Dorfbäckerei, Café & Wochenmarkt — zu Fuß" },
-				{ label: "Béziers", detail: "Historische Stadt, überdachter Markt, Freitagsflohmarkt — 20 km" },
-				{ label: "Narbonne", detail: "Römerstadt, Canal du Midi-Kreuzung — 30 km" },
-				{ label: "Carcassonne", detail: "Mittelalterliche Zitadelle & Weinbergrouten — 55 km" },
-				{ label: "Colombiers", detail: "Kanalschleusen, ruhiges Dorf — 8 km" },
+				{ label: "Colombiers", detail: "Kanalschleusen & ruhiges Leinpfaddorf — 8 km" },
+				{ label: "Béziers", detail: "Historische Stadt, überdachter Markt & Flohmarkt — 20 km" },
+				{ label: "Narbonne", detail: "Römerstadt & Canal du Midi-Kreuzung — 30 km" },
 			],
 			cycling: [
-				"Canal du Midi-Radweg (EuroVelo 8) verläuft direkt nebenan",
-				"Flacher, schattiger Leinpfad östlich nach Béziers — ca. 20 km, für alle Niveaus",
-				"Westlich Richtung Schleusen von Colombiers und Tunnel de Malpas — ein ganzer Radtag",
-				"Fahrradverleih in Béziers und im Dorf Capestang verfügbar",
+				{ direction: "Ost", label: "Béziers", detail: "20 km · flacher, schattiger Leinpfad" },
+				{ direction: "West", label: "Tunnel de Malpas", detail: "malerische Tagesroute über Schleusen Colombiers" },
+			],
+			cyclingNotes: [
+				"EuroVelo 8 · direkter Leinpfadzugang vom Liegeplatz",
+				"Fahrradverleih in Béziers und im Dorf Capestang",
+			],
+			dayTrips: [
+				{ label: "Carcassonne", detail: "Mittelalterliche Zitadelle & Weinbergrouten — 55 km" },
+				{ label: "Mittelmeerküste", detail: "Sète, Agde & Cap d'Agde — 40–60 km" },
+				{ label: "Minerve", detail: "Hochgelegenes Dorf über den Gorges de la Cesse — 45 km" },
+				{ label: "Saint-Guilhem-le-Désert", detail: "Mittelalterliches Dorf & Schluchtweg — 70 km" },
 			],
 		},
 		testimonials: {
@@ -674,47 +806,90 @@ const dictionary: Record<Language, Translations> = {
 		amenities: {
 			label: "Praktische info",
 			heading: "Een comfortabel verblijf, eenvoudig uitgerust",
-			desc1:
-				"Alles wat nodig is voor een rustige paar dagen op het water — niets overbodig, niets mist. De boot is compact van aard, maar doordacht ingericht voor comfort in alle seizoenen.",
-			desc2:
-				"Fietsers zijn bijzonder goed voorzien, met veilige opslag en directe toegang tot het Canal du Midi-fietspad vanuit de aanlegplaats.",
-			includedLabel: "Inbegrepen tijdens uw verblijf",
-			items: [
-				{ label: "Verwarming", detail: "Dieselverwarming voor de koelere maanden" },
-				{ label: "Handdoeken & beddengoed", detail: "Verzorgd voor alle gasten" },
-				{ label: "Keuken", detail: "Kookplaat, oven en koelkast — zelf koken naar wens" },
-				{ label: "Koffie & thee", detail: "Gratis, met een French press aan boord" },
-				{ label: "Snacks & dranken", detail: "Chips, iets zoets, koude bieren en flessenwater" },
-				{ label: "Fietsopslag", detail: "Veilige slotpunten op het jaagpad" },
-				{ label: "Parkeren", detail: "Gratis, op korte loopafstand van de aanlegplaats" },
-				{ label: "Inchecken", detail: "Vanaf 15:00 · zelf inchecken via sleutelkluis" },
-				{ label: "Uitchecken", detail: "Vóór 11:00" },
+			intro: "Alles wat nodig is voor een rustige paar dagen op het water — niets overbodig, niets mist.",
+			groups: [
+				{
+					label: "Aan boord",
+					items: [
+						{ label: "Verwarming", detail: "Diesel, het hele jaar" },
+						{ label: "Beddengoed & handdoeken", detail: "Verzorgd voor alle gasten" },
+						{ label: "Keuken", detail: "Kookplaat, oven & koelkast" },
+						{ label: "Koffie & thee", detail: "French press, gratis" },
+						{ label: "Snacks & dranken", detail: "Bieren, water & iets zoets" },
+					],
+				},
+				{
+					label: "Toegang & logistiek",
+					items: [
+						{ label: "Parkeren", detail: "Gratis, op loopafstand van de aanlegplaats" },
+						{ label: "Fietsopslag", detail: "Veilige slotpunten op het jaagpad" },
+						{ label: "Huisdieren", detail: "Welkom aan boord" },
+					],
+				},
+				{
+					label: "Verblijfsdetails",
+					items: [
+						{ label: "Inchecken", detail: "Vanaf 15:00 · zelf inchecken via sleutelkluis" },
+						{ label: "Uitchecken", detail: "Vóór 11:00" },
+						{ label: "Privacy", detail: "Volledig privé — geen gedeelde ruimtes" },
+					],
+				},
+			],
+			detailsLabel: "Meer weten?",
+			details: [
+				{
+					question: "Hoe verloopt het inchecken?",
+					answer: "Via een beveiligde sleutelkluis vanaf 15:00 uur. Volledige instructies worden na boeking toegestuurd.",
+				},
+				{
+					question: "Is parkeren echt gratis?",
+					answer: "Ja — op korte loopafstand van de aanlegplaats. Details zijn opgenomen in uw boekingsbevestiging.",
+				},
+				{
+					question: "Is de boot volledig privé?",
+					answer: "Ja. La Vie En Rose is een privé gehuurde boot — geen gedeelde ruimtes, geen andere gasten.",
+				},
+				{
+					question: "Zijn huisdieren welkom?",
+					answer: "Goed opgevoede huisdieren zijn welkom aan boord. Het jaagpad is ideaal voor ochtendwandelingen.",
+				},
+				{
+					question: "Hoe maak ik een reservering?",
+					answer: "Via Airbnb voor veilig betalen, of stuur een directe aanvraag als u dat prefereert.",
+				},
 			],
 		},
 		location: {
 			label: "Locatie",
 			heading: "Aangemeerd bij Capestang aan het Canal du Midi",
-			mooringHeading: "Over de aanlegplaats",
-			mooringText1:
-				"La Vie En Rose ligt aangemeerd bij Capestang — een klein dorp aan het Canal du Midi, omringd door wijngaarden en garrigue, in het departement Hérault in Zuid-Frankrijk.",
-			mooringText2:
-				"Het kanaal is hier rustig en zonder haast. Het dorp Capestang is op loopafstand. Béziers ligt een korte fietsrit naar het oosten. Het platanendak is kilometers lang ononderbroken.",
-			nearbyLabel: "In de buurt",
-			cyclingLabel: "Fietsmogelijkheden",
-			privacyNote:
-				"De exacte aanlegplaats wordt gedeeld met gasten na bevestiging van de boeking.",
+			intro: "De boot ligt aangemeerd bij Capestang — een dorp van platanen en stenen steegjes, omringd door wijngaarden, op het rustigste stuk van het Canal du Midi.",
+			quicklook: [
+				"Dorp Capestang — op loopafstand",
+				"Béziers — 20 km naar het oosten",
+				"Canal du Midi-jaagpad — direct toegankelijk",
+				"Wijngaarden & weekmarkten in de buurt",
+			],
+			tabs: { nearby: "Omgeving", cycling: "Fietsen", dayTrips: "Uitstapjes" },
+			privacyNote: "De exacte aanlegplaats wordt gedeeld met gasten na bevestiging van de boeking.",
 			nearby: [
 				{ label: "Capestang", detail: "Dorpsbakker, café & weekmarkt — op loopafstand" },
-				{ label: "Béziers", detail: "Historische stad, overdekte markt, vrijdagse rommelmarkt — 20 km" },
-				{ label: "Narbonne", detail: "Romeinse stad, Canal du Midi-kruispunt — 30 km" },
-				{ label: "Carcassonne", detail: "Middeleeuwse citadel & wijngaardroutes — 55 km" },
-				{ label: "Colombiers", detail: "Kanaalsluizen, rustig jaagpaddorp — 8 km" },
+				{ label: "Colombiers", detail: "Kanaalsluizen & rustig jaagpaddorp — 8 km" },
+				{ label: "Béziers", detail: "Historische stad, overdekte markt & rommelmarkt — 20 km" },
+				{ label: "Narbonne", detail: "Romeinse stad & Canal du Midi-kruispunt — 30 km" },
 			],
 			cycling: [
-				"Canal du Midi-fietsroute (EuroVelo 8) loopt direct langs de boot",
-				"Vlak, beschaduwd jaagpad oostwaarts naar Béziers — ca. 20 km, voor alle niveaus",
-				"Westwaarts richting sluizen van Colombiers en de Tunnel de Malpas — een volledige dagrit",
-				"Fietsverhuur beschikbaar in Béziers en het dorp Capestang",
+				{ direction: "Oost", label: "Béziers", detail: "20 km · vlak, beschaduwd jaagpad" },
+				{ direction: "West", label: "Tunnel de Malpas", detail: "schilderachtige dagroute via sluizen Colombiers" },
+			],
+			cyclingNotes: [
+				"EuroVelo 8 · direct jaagpadtoegang vanaf de aanlegplaats",
+				"Fietsverhuur in Béziers en het dorp Capestang",
+			],
+			dayTrips: [
+				{ label: "Carcassonne", detail: "Middeleeuwse citadel & wijngaardroutes — 55 km" },
+				{ label: "Middellandse Zeekust", detail: "Sète, Agde & Cap d'Agde — 40–60 km" },
+				{ label: "Minerve", detail: "Hoog gelegen dorp boven de Gorges de la Cesse — 45 km" },
+				{ label: "Saint-Guilhem-le-Désert", detail: "Middeleeuws dorp & kloofdal — 70 km" },
 			],
 		},
 		testimonials: {

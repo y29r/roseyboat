@@ -9,8 +9,11 @@ type Review = {
 	quote: string;
 	name: string;
 	country: string;
+	flag: string;
 	rating: number;
 };
+
+const DISPLAY_DURATION: number = 6500;
 
 const reviews: Review[] = [
 	{
@@ -18,6 +21,7 @@ const reviews: Review[] = [
 			"Waking up to water and birdsong every morning. The canal at dawn is something I'll never forget.",
 		name: "Sophie",
 		country: "Netherlands",
+		flag: "🇳🇱",
 		rating: 5,
 	},
 	{
@@ -25,6 +29,7 @@ const reviews: Review[] = [
 			"Perfectly clean, beautifully restored. The kitchen had everything and the beds were incredibly comfortable.",
 		name: "James",
 		country: "United Kingdom",
+		flag: "🇬🇧",
 		rating: 5,
 	},
 	{
@@ -32,6 +37,7 @@ const reviews: Review[] = [
 			"We cycled to three villages and a medieval citadel. Having the boat as a base made it feel like a real adventure.",
 		name: "Lena",
 		country: "Germany",
+		flag: "🇩🇪",
 		rating: 5,
 	},
 	{
@@ -39,6 +45,7 @@ const reviews: Review[] = [
 			"Quiet, honest, and utterly peaceful. Nothing pretentious — just a beautiful place on a beautiful waterway.",
 		name: "Thomas",
 		country: "France",
+		flag: "🇫🇷",
 		rating: 5,
 	},
 	{
@@ -46,6 +53,7 @@ const reviews: Review[] = [
 			"The host was wonderfully helpful with cycling routes. The towpath access is just incredible.",
 		name: "Camille",
 		country: "Canada",
+		flag: "🇨🇦",
 		rating: 5,
 	},
 	{
@@ -53,6 +61,7 @@ const reviews: Review[] = [
 			"We came for three nights and wished we'd booked a week. The sunsets from the deck were worth the trip alone.",
 		name: "Erik",
 		country: "Sweden",
+		flag: "🇸🇪",
 		rating: 5,
 	},
 ];
@@ -77,82 +86,23 @@ export default function Testimonials() {
 	const [timerKey, setTimerKey]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(0);
 
 	const touchStartX: React.RefObject<number | null> = useRef<number | null>(null);
-	const quoteWrapReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
-	const prevHeightReference: React.RefObject<number> = useRef<number>(0);
 
 	const reviewCount: number = reviews.length;
 
-	const stepDirection: (newIndex: number, direction: Direction) => void = useCallback((newIndex: number, direction: Direction) => {
-		if (quoteWrapReference.current) {
-			prevHeightReference.current = quoteWrapReference.current.offsetHeight;
-		}
-
-		setDirection(direction);
+	const stepDirection: (newIndex: number, direction: Direction) => void = useCallback((newIndex: number, dir: Direction) => {
+		setDirection(dir);
 		setActive(newIndex);
-
-		setTimerKey((key: number) => key + 1);
+		setTimerKey((k: number) => k + 1);
 	}, []);
 
 	useEffect(() => {
 		const interval: NodeJS.Timeout = setInterval(() => {
-			if (quoteWrapReference.current) {
-				prevHeightReference.current = quoteWrapReference.current.offsetHeight;
-			}
-
 			setDirection("forward");
 			setActive((i) => (i + 1) % reviewCount);
-		}, 6500);
+		}, DISPLAY_DURATION);
 
 		return () => clearInterval(interval);
 	}, [timerKey, reviewCount]);
-
-	useEffect(() => {
-		const element: HTMLDivElement | null = quoteWrapReference.current;
-		if (!element || prevHeightReference.current === 0)
-			return;
-
-		const newHeight: number = element.offsetHeight;
-		if (newHeight === prevHeightReference.current)
-			return;
-
-		let cleanedUp: boolean = false;
-		let nextAnimationFrameId: number = 0;
-
-		element.style.transition = 'none';
-		element.style.height = `${prevHeightReference.current}px`;
-
-		const currentAnimationFrameId: number = requestAnimationFrame(() => {
-			nextAnimationFrameId = requestAnimationFrame(() => {
-				if (cleanedUp)
-					return;
-
-				element.style.transition = 'height 0.55s cubic-bezier(0.4, 0, 0.2, 1)';
-				element.style.height = `${newHeight}px`;
-			});
-		});
-
-		const onEnd: EventListener = () => {
-			if (cleanedUp)
-				return;
-
-			element.style.height = 'auto';
-			element.style.transition = '';
-		};
-
-		element.addEventListener('transitionend', onEnd, { once: true });
-
-		return () => {
-			cleanedUp = true;
-
-			cancelAnimationFrame(currentAnimationFrameId);
-			cancelAnimationFrame(nextAnimationFrameId);
-
-			element.removeEventListener('transitionend', onEnd);
-
-			element.style.height = 'auto';
-			element.style.transition = '';
-		};
-	}, [active]);
 
 	const goNext: () => void = () => stepDirection((active + 1) % reviewCount, "forward");
 	const goPrevious: () => void = () => stepDirection((active - 1 + reviewCount) % reviewCount, "backward");
@@ -191,9 +141,7 @@ export default function Testimonials() {
 					</div>
 				</div>
 
-				<div
-					ref={quoteWrapReference}
-					className="relative"
+				<div className="relative"
 					onTouchStart={onTouchStart}
 					onTouchEnd={onTouchEnd}
 				>
@@ -214,7 +162,7 @@ export default function Testimonials() {
 
 						<blockquote
 							key={active}
-							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance ${animationClass}`}
+							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance min-h-[7rem] sm:min-h-[8.5rem] lg:min-h-[9.5rem] ${animationClass}`}
 						>
 							&ldquo;{reviews[active].quote}&rdquo;
 						</blockquote>
@@ -230,9 +178,24 @@ export default function Testimonials() {
 								{reviews[active].name}
 							</p>
 
-							<p className="font-sans text-xs text-muted mt-1 tracking-widest uppercase">
+							<p className="font-sans text-xs text-muted mt-1 tracking-widest uppercase flex items-center justify-center gap-1.5">
+								<span className="text-sm leading-none" aria-hidden="true">{reviews[active].flag}</span>
 								{reviews[active].country}
 							</p>
+						</div>
+
+						<div
+							className="review-progress-bar mt-1 w-10 h-px bg-beige/60 overflow-hidden rounded-full"
+							aria-hidden
+						>
+							<div
+								key={`progress-${active}`}
+								className="h-full bg-canal-green/50"
+								style={{
+									transformOrigin: "left",
+									animation: `progressFill ${DISPLAY_DURATION}ms linear forwards`,
+								}}
+							/>
 						</div>
 					</div>
 				</div>
@@ -249,14 +212,14 @@ export default function Testimonials() {
 					</button>
 
 					<div className="flex items-center gap-2.5" role="tablist">
-						{reviews.map((_, i) => (
+						{reviews.map((_: any, index: number) => (
 							<button
-								key={i}
+								key={index}
 								role="tab"
-								aria-selected={i === active}
-								aria-label={`Review ${i + 1}`}
-								onClick={() => stepDirection(i, i > active ? "forward" : "backward")}
-								className={`rounded-full transition-all duration-500 ${i === active
+								aria-selected={index === active}
+								aria-label={`Review ${index + 1}`}
+								onClick={() => stepDirection(index, index > active ? "forward" : "backward")}
+								className={`rounded-full transition-all duration-500 ${index === active
 									? "w-7 h-1.5 bg-canal-green"
 									: "w-1.5 h-1.5 bg-beige hover:bg-canal-green/40"
 									}`}
@@ -276,7 +239,7 @@ export default function Testimonials() {
 				</div>
 
 				<div className="mt-14 pt-10 border-t border-beige/60 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
-					{previewIndices.map((index) => {
+					{previewIndices.map((index: number) => {
 						const review = reviews[index];
 						return (
 							<button
@@ -288,8 +251,9 @@ export default function Testimonials() {
 									&ldquo;{review.quote}&rdquo;
 								</p>
 
-								<p className="font-sans text-xs text-muted mt-2 group-hover:text-canal-green transition-colors duration-200">
-									— {review.name}, {review.country}
+								<p className="font-sans text-xs text-muted mt-2 flex items-center gap-1 group-hover:text-canal-green transition-colors duration-200">
+									<span aria-hidden="true">{review.flag}</span>
+									<span>— {review.name}, {review.country}</span>
 								</p>
 							</button>
 						);
