@@ -28,6 +28,8 @@ type MediaItem = ImageItem | VideoItem;
 
 /* ─── Media collection ───────────────────────────────────────────────────────── */
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const MEDIA: MediaItem[] = [
 	{
 		id: "a",
@@ -48,8 +50,8 @@ const MEDIA: MediaItem[] = [
 	{
 		id: "c",
 		type: "video",
-		src: "/videos/boat-preview.mp4",
-		poster: "/videos/poster-preview.jpg",
+		src: `${BASE}/videos/boat-preview.mp4`,
+		poster: `${BASE}/videos/poster-preview.jpg`,
 		title: "Life on La Vie En Rose",
 		gridSpan: "col-span-1 row-span-1",
 	},
@@ -96,8 +98,8 @@ const MEDIA: MediaItem[] = [
 	{
 		id: "i",
 		type: "video",
-		src: "/videos/narrowboat-experience.mp4",
-		poster: "/videos/poster-experience.jpg",
+		src: `${BASE}/videos/narrowboat-experience.mp4`,
+		poster: `${BASE}/videos/poster-experience.jpg`,
 		title: "What it's like to stay",
 		gridSpan: "col-span-1 row-span-1",
 	},

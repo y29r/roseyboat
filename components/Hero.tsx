@@ -26,7 +26,7 @@ export default function Hero() {
 		const id = setTimeout(() => {
 			const video = videoRef.current;
 			if (!video) return;
-			video.src = "/videos/hero-loop.mp4";
+			video.src = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/hero-loop.mp4`;
 			video.load();
 			video.play().catch(() => { });
 		}, 1200);
