@@ -18,14 +18,48 @@ const manrope = Manrope({
 	display: "swap",
 });
 
+const SITE_URL = "https://y29r.github.io/roseyboat";
+
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
 	title: "La Vie En Rose — Canal du Midi Narrowboat Retreat",
 	description:
 		"Stay aboard a restored traditional canal boat on the Canal du Midi, southern France. A slow, quiet escape for cyclists, romantics, and wanderers.",
+	keywords: [
+		"canal boat rental",
+		"Canal du Midi",
+		"narrowboat holiday",
+		"France boat hire",
+		"southern France",
+		"slow travel",
+		"houseboat retreat",
+	],
+	alternates: {
+		canonical: SITE_URL + "/",
+	},
 	openGraph: {
 		title: "La Vie En Rose — Canal du Midi Narrowboat Retreat",
-		description: "A slow, quiet escape on the water in southern France.",
+		description:
+			"Stay aboard a restored traditional canal boat on the Canal du Midi, southern France. A slow, quiet escape for cyclists, romantics, and wanderers.",
+		url: SITE_URL + "/",
+		siteName: "La Vie En Rose",
 		type: "website",
+		locale: "en_GB",
+		images: [
+			{
+				url: SITE_URL + "/videos/poster-hero.jpg",
+				width: 1920,
+				height: 1080,
+				alt: "La Vie En Rose narrowboat moored on the Canal du Midi",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "La Vie En Rose — Canal du Midi Narrowboat Retreat",
+		description:
+			"Stay aboard a restored traditional canal boat on the Canal du Midi, southern France. A slow, quiet escape for cyclists, romantics, and wanderers.",
+		images: [SITE_URL + "/videos/poster-hero.jpg"],
 	},
 };
 
