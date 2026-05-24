@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 export default function Hero() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const contentRef = useRef<HTMLDivElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const [videoVisible, setVideoVisible] = useState(false);

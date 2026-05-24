@@ -1,21 +1,26 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 export default function BackToTop() {
-	const [visible, setVisible] = useState(false);
-	const [lightboxOpen, setLightboxOpen] = useState(false);
+	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
+	const [lightboxOpen, setLightboxOpen]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
 
 	useEffect(() => {
-		const onScroll = () => setVisible(window.scrollY > 600);
+		const onScroll: () => void = () => setVisible(window.scrollY > 600);
+
 		window.addEventListener("scroll", onScroll, { passive: true });
+
 		return () => window.removeEventListener("scroll", onScroll);
 	}, []);
 
 	useEffect(() => {
-		const onToggle = (e: Event) => {
-			setLightboxOpen((e as CustomEvent<{ open: boolean }>).detail.open);
+		const onToggle: (event: Event) => void = (event: Event) => {
+			setLightboxOpen((event as CustomEvent<{ open: boolean }>).detail.open);
 		};
+
 		window.addEventListener("lightbox-toggle", onToggle);
+
 		return () => window.removeEventListener("lightbox-toggle", onToggle);
 	}, []);
 
@@ -24,8 +29,8 @@ export default function BackToTop() {
 			onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			aria-label="Back to top"
 			className={`hidden md:flex fixed bottom-8 right-6 z-50 w-10 h-10 items-center justify-center bg-cream border border-beige/70 rounded-full shadow-sm hover:bg-beige hover:border-beige transition-all duration-300 ${visible && !lightboxOpen
-					? "opacity-100 translate-y-0"
-					: "opacity-0 translate-y-3 pointer-events-none"
+				? "opacity-100 translate-y-0"
+				: "opacity-0 translate-y-3 pointer-events-none"
 				}`}
 		>
 			<svg

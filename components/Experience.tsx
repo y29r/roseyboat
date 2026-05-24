@@ -1,5 +1,5 @@
 "use client";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 import ParallaxImage from "./ParallaxImage";
 
 const MOMENT_IMAGES = [
@@ -10,7 +10,7 @@ const MOMENT_IMAGES = [
 ];
 
 export default function Experience() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const moments = t.experience.moments.map((moment, i) => ({ ...moment, ...MOMENT_IMAGES[i] }));
 	return (
 		<section id="experience" className="py-20 lg:py-32 bg-cream">

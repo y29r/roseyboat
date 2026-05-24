@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 export default function CtaSection() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	return (
 		<section className="relative py-28 lg:py-40 overflow-hidden">
 			{/* Background */}

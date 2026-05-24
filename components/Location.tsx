@@ -1,8 +1,8 @@
 "use client";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 export default function Location() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const nearby = t.location.nearby;
 	const cyclingRoutes = t.location.cycling;
 	return (

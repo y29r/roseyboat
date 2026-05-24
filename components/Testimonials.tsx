@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 const reviews = [
 	{
@@ -62,7 +62,7 @@ function Stars({ count }: { count: number }) {
 type Dir = "forward" | "backward";
 
 export default function Testimonials() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const [active, setActive] = useState(0);
 	const [dir, setDir] = useState<Dir>("forward");
 	const [timerKey, setTimerKey] = useState(0);

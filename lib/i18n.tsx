@@ -8,11 +8,10 @@ import React, {
 	useCallback,
 } from "react";
 
-export type Lang = "EN" | "FR" | "DE" | "NL";
-export const LANGUAGES: Lang[] = ["EN", "FR", "DE", "NL"];
+export type Language = "EN" | "FR" | "DE" | "NL";
+export const LANGUAGES: Language[] = ["EN", "FR", "DE", "NL"];
 
-/* ─── Translation dictionary type ──────────────────────────────────────────── */
-export type T = {
+export type Translations = {
 	nav: {
 		experience: string;
 		gallery: string;
@@ -114,8 +113,7 @@ export type T = {
 	};
 };
 
-/* ─── Translations ──────────────────────────────────────────────────────────── */
-const dict: Record<Lang, T> = {
+const dict: Record<Language, Translations> = {
 	EN: {
 		nav: {
 			experience: "Experience",
@@ -745,41 +743,47 @@ const dict: Record<Lang, T> = {
 	},
 };
 
-/* ─── Context ───────────────────────────────────────────────────────────────── */
-const I18nContext = createContext<{
-	lang: Lang;
-	setLang: (l: Lang) => void;
-	t: T;
-}>({ lang: "EN", setLang: () => { }, t: dict.EN });
+const I18nContext: React.Context<{
+	language: Language;
+	setLanguage: (l: Language) => void;
+	translations: Translations;
+}> = createContext<{
+	language: Language;
+	setLanguage: (l: Language) => void;
+	translations: Translations;
+}>({ language: "EN", setLanguage: () => { }, translations: dict.EN });
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-	const [lang, setLangState] = useState<Lang>("EN");
+	const [language, setLanguageState]: [Language, (language: Language) => void] = useState<Language>("EN");
 
 	useEffect(() => {
 		try {
-			const saved = localStorage.getItem("lang") as Lang | null;
-			if (saved && dict[saved] !== undefined) setLangState(saved);
+			const saved: Language | null = localStorage.getItem("language") as Language | null;
+
+			if (saved && dict[saved] !== undefined)
+				setLanguageState(saved);
 		} catch {
-			// silently fall back in SSR or private-mode environments
+			console.log("Could not access localStorage to get saved language preference.");
 		}
 	}, []);
 
-	const setLang = useCallback((language: Lang) => {
-		setLangState(language);
+	const setLanguage: (language: Language) => void = useCallback((language: Language) => {
+		setLanguageState(language);
+
 		try {
-			localStorage.setItem("lang", language);
+			localStorage.setItem("language", language);
 		} catch {
-			// silently fall back in SSR or private-mode environments
+			console.log("Could not access localStorage to save language preference.");
 		}
 	}, []);
 
 	return (
-		<I18nContext.Provider value={{ lang, setLang, t: dict[lang] }}>
+		<I18nContext.Provider value={{ language, setLanguage, translations: dict[language] }}>
 			{children}
 		</I18nContext.Provider>
 	);
 }
 
-export function useT() {
+export function useTranslation() {
 	return useContext(I18nContext);
 }

@@ -1,24 +1,24 @@
 "use client";
+
 import { Fragment } from "react";
-import { useT, LANGUAGES, type Lang } from "@/lib/i18n";
+import { useTranslation, LANGUAGES, type Language } from "@/lib/i18n";
 
 export default function Footer() {
-	const { t, lang, setLang } = useT();
+	const { translations, language, setLanguage }: { translations: any; language: Language; setLanguage: (language: Language) => void } = useTranslation();
+
 	return (
 		<footer className="bg-dark text-white/60 py-12 lg:py-16">
 			<div className="max-w-7xl mx-auto px-6 lg:px-10">
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-					{/* Brand */}
 					<div className="sm:col-span-2 lg:col-span-1">
 						<p className="font-serif text-white text-2xl font-medium mb-3">La Vie En Rose</p>
 						<p className="font-sans text-sm leading-relaxed">
-							{t.footer.tagline}
+							{translations.footer.tagline}
 						</p>
 					</div>
 
-					{/* Contact */}
 					<div>
-						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{t.footer.contact}</h4>
+						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{translations.footer.contact}</h4>
 						<ul className="space-y-2 font-sans text-sm">
 							<li>
 								<a
@@ -28,6 +28,7 @@ export default function Footer() {
 									contact@labarque.fr
 								</a>
 							</li>
+
 							<li>
 								<a
 									href="https://www.airbnb.com"
@@ -35,15 +36,14 @@ export default function Footer() {
 									rel="noopener noreferrer"
 									className="hover:text-white transition-colors duration-200"
 								>
-									{t.footer.bookAirbnb}
+									{translations.footer.bookAirbnb}
 								</a>
 							</li>
 						</ul>
 					</div>
 
-					{/* Social */}
 					<div>
-						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{t.footer.follow}</h4>
+						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{translations.footer.follow}</h4>
 						<ul className="space-y-2 font-sans text-sm">
 							<li>
 								<a
@@ -61,19 +61,17 @@ export default function Footer() {
 						</ul>
 					</div>
 
-					{/* Language / Legal */}
 					<div>
-						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{t.footer.language}</h4>
+						<h4 className="font-sans text-xs tracking-[0.2em] uppercase text-white/40 mb-4">{translations.footer.language}</h4>
 						<div className="flex gap-3 font-sans text-sm">
-							{LANGUAGES.map((language, index) => (
-								<Fragment key={language}>
+							{LANGUAGES.map((mappedLanguage: Language, index: number) => (
+								<Fragment key={mappedLanguage}>
 									{index > 0 && <span className="text-white/20">·</span>}
 									<button
-										onClick={() => setLang(language as Lang)}
-										className={`transition-colors ${lang === language ? "text-white font-medium" : "hover:text-white"
-											}`}
+										onClick={() => setLanguage(mappedLanguage)}
+										className={`transition-colors ${language === mappedLanguage ? "text-white font-medium" : "hover:text-white"}`}
 									>
-										{language}
+										{mappedLanguage.toUpperCase()}
 									</button>
 								</Fragment>
 							))}
@@ -81,13 +79,13 @@ export default function Footer() {
 					</div>
 				</div>
 
-				{/* Bottom bar */}
 				<div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
 					<p className="font-sans text-xs text-white/30">
 						© {new Date().getFullYear()} La Vie En Rose · Canal du Midi, France
 					</p>
+
 					<p className="font-sans text-xs text-white/20">
-						{t.footer.built}
+						{translations.footer.built}
 					</p>
 				</div>
 			</div>

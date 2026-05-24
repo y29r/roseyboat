@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 export default function MobileStickyCta() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {

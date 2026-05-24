@@ -1,5 +1,5 @@
 "use client";
-import { useT } from "@/lib/i18n";
+import { useTranslation } from "@/lib/i18n";
 
 const ICONS = [
 	<svg key="sleeps" className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden>
@@ -20,7 +20,7 @@ const ICONS = [
 ];
 
 export default function Features() {
-	const { t } = useT();
+	const { translations: t } = useTranslation();
 	const features = [
 		{ label: t.features.sleeps, icon: ICONS[0] },
 		{ label: t.features.shower, icon: ICONS[1] },
