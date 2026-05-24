@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, type Translations } from "@/lib/i18n";
 import { isBooked, isPast, getDaysInMonth } from "./dateUtils";
 
 export default function AvailabilityCalendar() {
-	const { translations }: { translations: any } = useTranslation();
+	const { translations }: { translations: Translations } = useTranslation();
 
 	const today: Date = new Date();
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, type Translations } from "@/lib/i18n";
 
 type ImageItem = {
 	id: string;
@@ -118,7 +118,7 @@ function Lightbox({
 	const [mediaIndex, setMediaIndex]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(initialIndex);
 	const [playing, setPlaying]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(initialPlay);
 
-	const { translations } = useTranslation();
+	const { translations }: { translations: Translations } = useTranslation();
 
 	const filmReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
 	const touchX: React.RefObject<number> = useRef(0);

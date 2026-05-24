@@ -1,10 +1,10 @@
 "use client";
 
 import { Fragment } from "react";
-import { useTranslation, LANGUAGES, type Language } from "@/lib/i18n";
+import { useTranslation, LANGUAGES, type Language, type Translations } from "@/lib/i18n";
 
 export default function Footer() {
-	const { translations, language, setLanguage }: { translations: any; language: Language; setLanguage: (language: Language) => void } = useTranslation();
+	const { translations, language, setLanguage }: { translations: Translations; language: Language; setLanguage: (language: Language) => void } = useTranslation();
 
 	return (
 		<footer className="bg-dark text-white/60 py-12 lg:py-16">

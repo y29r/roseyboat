@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, type Translations } from "@/lib/i18n";
 
 export default function Amenities() {
-	const { translations }: { translations: any } = useTranslation();
+	const { translations }: { translations: Translations } = useTranslation();
 	const included: { label: string; detail: string }[] = translations.amenities.items;
 
 	return (

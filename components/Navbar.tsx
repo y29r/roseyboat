@@ -2,7 +2,7 @@
 
 import { Fragment, useState, useEffect } from "react";
 import Link from "next/link";
-import { useTranslation, LANGUAGES, type Language } from "@/lib/i18n";
+import { useTranslation, LANGUAGES, type Language, type Translations } from "@/lib/i18n";
 
 const NAV_HREFS: { key: string, href: string }[] = [
 	{ key: "experience" as const, href: "#experience" },
@@ -12,7 +12,7 @@ const NAV_HREFS: { key: string, href: string }[] = [
 ];
 
 export default function Navbar() {
-	const { translations, language, setLanguage }: { translations: any; language: Language; setLanguage: (language: Language) => void } = useTranslation();
+	const { translations, language, setLanguage }: { translations: Translations; language: Language; setLanguage: (language: Language) => void } = useTranslation();
 
 	const [scrolled, setScrolled]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
 	const [menuOpen, setMenuOpen]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);

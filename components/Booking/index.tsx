@@ -1,10 +1,10 @@
 "use client";
 
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, type Translations } from "@/lib/i18n";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 
 export default function Booking() {
-	const { translations }: { translations: any } = useTranslation();
+	const { translations }: { translations: Translations } = useTranslation();
 
 	return (
 		<section id="booking" className="py-20 lg:py-32 bg-cream">

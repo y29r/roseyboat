@@ -113,7 +113,7 @@ export type Translations = {
 	};
 };
 
-const dict: Record<Language, Translations> = {
+const dictionary: Record<Language, Translations> = {
 	EN: {
 		nav: {
 			experience: "Experience",
@@ -745,13 +745,13 @@ const dict: Record<Language, Translations> = {
 
 const I18nContext: React.Context<{
 	language: Language;
-	setLanguage: (l: Language) => void;
+	setLanguage: (language: Language) => void;
 	translations: Translations;
 }> = createContext<{
 	language: Language;
-	setLanguage: (l: Language) => void;
+	setLanguage: (language: Language) => void;
 	translations: Translations;
-}>({ language: "EN", setLanguage: () => { }, translations: dict.EN });
+}>({ language: "EN", setLanguage: () => { }, translations: dictionary.EN });
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
 	const [language, setLanguageState]: [Language, (language: Language) => void] = useState<Language>("EN");
@@ -760,7 +760,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 		try {
 			const saved: Language | null = localStorage.getItem("language") as Language | null;
 
-			if (saved && dict[saved] !== undefined)
+			if (saved && dictionary[saved] !== undefined)
 				setLanguageState(saved);
 		} catch {
 			console.log("Could not access localStorage to get saved language preference.");
@@ -778,7 +778,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	return (
-		<I18nContext.Provider value={{ language, setLanguage, translations: dict[language] }}>
+		<I18nContext.Provider value={{ language, setLanguage, translations: dictionary[language] }}>
 			{children}
 		</I18nContext.Provider>
 	);

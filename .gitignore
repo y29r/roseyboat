@@ -20,3 +20,4 @@ build/
 *.pem
 npm-debug.log*
 tsconfig.tsbuildinfo
+scripts

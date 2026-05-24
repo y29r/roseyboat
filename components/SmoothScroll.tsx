@@ -5,36 +5,34 @@ import Lenis from "lenis";
 
 export default function SmoothScroll() {
 	useEffect(() => {
-		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+			return;
 
-		const lenis = new Lenis({
+		const lenis: Lenis = new Lenis({
 			duration: 0.9,
-			easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			easing: (time: number) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
 			smoothWheel: true,
 		});
 
-		let rafId: number;
+		let animationFrameId: number;
 
-		function raf(time: number) {
-			// If the native scroll position (scrollbar, keyboard, programmatic)
-			// diverged from Lenis's animated position while Lenis was mid-animation,
-			// sync immediately BEFORE Lenis can call window.scrollTo() and fight it.
-			if (
-				lenis.isScrolling === 'smooth' &&
-				Math.abs(lenis.actualScroll - lenis.scroll) > 5
-			) {
+		const update: (time: number) => void = (time: number) => {
+			if (lenis.isScrolling === 'smooth' && Math.abs(lenis.actualScroll - lenis.scroll) > 5) {
 				lenis.animatedScroll = lenis.actualScroll;
 				lenis.targetScroll = lenis.actualScroll;
 			}
-			lenis.raf(time);
-			rafId = requestAnimationFrame(raf);
-		}
 
-		rafId = requestAnimationFrame(raf);
+			lenis.raf(time);
+
+			animationFrameId = requestAnimationFrame(update);
+		};
+
+		animationFrameId = requestAnimationFrame(update);
 
 		return () => {
 			lenis.destroy();
-			cancelAnimationFrame(rafId);
+
+			cancelAnimationFrame(animationFrameId);
 		};
 	}, []);
 

@@ -1,8 +1,18 @@
 "use client";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useTranslation } from "@/lib/i18n";
 
-const reviews = [
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation, type Translations } from "@/lib/i18n";
+
+type Direction = "forward" | "backward";
+
+type Review = {
+	quote: string;
+	name: string;
+	country: string;
+	rating: number;
+};
+
+const reviews: Review[] = [
 	{
 		quote:
 			"Waking up to water and birdsong every morning. The canal at dawn is something I'll never forget.",
@@ -59,112 +69,134 @@ function Stars({ count }: { count: number }) {
 	);
 }
 
-type Dir = "forward" | "backward";
-
 export default function Testimonials() {
-	const { translations: t } = useTranslation();
-	const [active, setActive] = useState(0);
-	const [dir, setDir] = useState<Dir>("forward");
-	const [timerKey, setTimerKey] = useState(0);
-	const touchStartX = useRef<number | null>(null);
-	const quoteWrapRef = useRef<HTMLDivElement>(null);
-	const prevHeightRef = useRef(0);
-	const reviewCount = reviews.length;
+	const { translations }: { translations: Translations } = useTranslation();
 
-	// Navigate and reset the auto-advance timer
-	const go = useCallback((newIdx: number, direction: Dir) => {
-		if (quoteWrapRef.current) {
-			prevHeightRef.current = quoteWrapRef.current.offsetHeight;
+	const [active, setActive]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(0);
+	const [direction, setDirection]: [Direction, React.Dispatch<React.SetStateAction<Direction>>] = useState<Direction>("forward");
+	const [timerKey, setTimerKey]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(0);
+
+	const touchStartX: React.RefObject<number | null> = useRef<number | null>(null);
+	const quoteWrapReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
+	const prevHeightReference: React.RefObject<number> = useRef<number>(0);
+
+	const reviewCount: number = reviews.length;
+
+	const stepDirection: (newIndex: number, direction: Direction) => void = useCallback((newIndex: number, direction: Direction) => {
+		if (quoteWrapReference.current) {
+			prevHeightReference.current = quoteWrapReference.current.offsetHeight;
 		}
-		setDir(direction);
-		setActive(newIdx);
-		setTimerKey((k) => k + 1);
+
+		setDirection(direction);
+		setActive(newIndex);
+
+		setTimerKey((key: number) => key + 1);
 	}, []);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			if (quoteWrapRef.current) {
-				prevHeightRef.current = quoteWrapRef.current.offsetHeight;
+		const interval: NodeJS.Timeout = setInterval(() => {
+			if (quoteWrapReference.current) {
+				prevHeightReference.current = quoteWrapReference.current.offsetHeight;
 			}
-			setDir("forward");
+
+			setDirection("forward");
 			setActive((i) => (i + 1) % reviewCount);
 		}, 6500);
+
 		return () => clearInterval(interval);
 	}, [timerKey, reviewCount]);
 
 	useEffect(() => {
-		const el = quoteWrapRef.current;
-		if (!el || prevHeightRef.current === 0) return;
-		const newH = el.offsetHeight;
-		if (newH === prevHeightRef.current) return;
-		let cleanedUp = false;
-		let raf2 = 0;
-		el.style.transition = 'none';
-		el.style.height = `${prevHeightRef.current}px`;
-		const raf1 = requestAnimationFrame(() => {
-			raf2 = requestAnimationFrame(() => {
-				if (cleanedUp) return;
-				el.style.transition = 'height 0.55s cubic-bezier(0.4, 0, 0.2, 1)';
-				el.style.height = `${newH}px`;
+		const element: HTMLDivElement | null = quoteWrapReference.current;
+		if (!element || prevHeightReference.current === 0)
+			return;
+
+		const newHeight: number = element.offsetHeight;
+		if (newHeight === prevHeightReference.current)
+			return;
+
+		let cleanedUp: boolean = false;
+		let nextAnimationFrameId: number = 0;
+
+		element.style.transition = 'none';
+		element.style.height = `${prevHeightReference.current}px`;
+
+		const currentAnimationFrameId: number = requestAnimationFrame(() => {
+			nextAnimationFrameId = requestAnimationFrame(() => {
+				if (cleanedUp)
+					return;
+
+				element.style.transition = 'height 0.55s cubic-bezier(0.4, 0, 0.2, 1)';
+				element.style.height = `${newHeight}px`;
 			});
 		});
-		const onEnd = () => {
-			if (cleanedUp) return;
-			el.style.height = 'auto';
-			el.style.transition = '';
+
+		const onEnd: EventListener = () => {
+			if (cleanedUp)
+				return;
+
+			element.style.height = 'auto';
+			element.style.transition = '';
 		};
-		el.addEventListener('transitionend', onEnd, { once: true });
+
+		element.addEventListener('transitionend', onEnd, { once: true });
+
 		return () => {
 			cleanedUp = true;
-			cancelAnimationFrame(raf1);
-			cancelAnimationFrame(raf2);
-			el.removeEventListener('transitionend', onEnd);
-			el.style.height = 'auto';
-			el.style.transition = '';
+
+			cancelAnimationFrame(currentAnimationFrameId);
+			cancelAnimationFrame(nextAnimationFrameId);
+
+			element.removeEventListener('transitionend', onEnd);
+
+			element.style.height = 'auto';
+			element.style.transition = '';
 		};
 	}, [active]);
 
-	const goNext = () => go((active + 1) % reviewCount, "forward");
-	const goPrev = () => go((active - 1 + reviewCount) % reviewCount, "backward");
+	const goNext: () => void = () => stepDirection((active + 1) % reviewCount, "forward");
+	const goPrevious: () => void = () => stepDirection((active - 1 + reviewCount) % reviewCount, "backward");
 
-	const onTouchStart = (e: React.TouchEvent) => {
-		touchStartX.current = e.touches[0].clientX;
+	const onTouchStart: (event: React.TouchEvent) => void = (event: React.TouchEvent) => {
+		touchStartX.current = event.touches[0].clientX;
 	};
-	const onTouchEnd = (e: React.TouchEvent) => {
-		if (touchStartX.current === null) return;
-		const diff = touchStartX.current - e.changedTouches[0].clientX;
-		if (Math.abs(diff) > 48) diff > 0 ? goNext() : goPrev();
+
+	const onTouchEnd: (event: React.TouchEvent) => void = (event: React.TouchEvent) => {
+		if (touchStartX.current === null)
+			return;
+
+		const difference: number = touchStartX.current - event.changedTouches[0].clientX;
+		if (Math.abs(difference) > 48)
+			difference > 0 ? goNext() : goPrevious();
+
 		touchStartX.current = null;
 	};
 
-	const animClass = dir === "forward" ? "animate-slide-in-right" : "animate-slide-in-left";
-	const previewIndices = [1, 2, 3].map((offset) => (active + offset) % reviewCount);
+	const animationClass: string = direction === "forward" ? "animate-slide-in-right" : "animate-slide-in-left";
+	const previewIndices: number[] = [1, 2, 3].map((offset) => (active + offset) % reviewCount);
 
 	return (
 		<section id="testimonials" className="py-20 lg:py-32 bg-[#EFECE4] overflow-hidden">
 			<div className="max-w-4xl mx-auto px-6 lg:px-10">
-
-				{/* Header */}
 				<div className="flex flex-col items-center text-center mb-16">
 					<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-5">
-						{t.testimonials.label}
+						{translations.testimonials.label}
 					</p>
+
 					<div className="flex items-center gap-3">
 						<Stars count={5} />
 						<span className="font-sans text-sm text-muted">
-							<strong className="text-dark">4.97</strong> {t.testimonials.ratingText}
+							<strong className="text-dark">4.97</strong> {translations.testimonials.ratingText}
 						</span>
 					</div>
 				</div>
 
-				{/* Featured quote */}
 				<div
-					ref={quoteWrapRef}
+					ref={quoteWrapReference}
 					className="relative"
 					onTouchStart={onTouchStart}
 					onTouchEnd={onTouchEnd}
 				>
-					{/* Decorative opening quote */}
 					<span
 						className="absolute -top-12 -left-2 lg:-left-6 font-serif text-[9rem] lg:text-[13rem] leading-none text-canal-green/[0.08] select-none pointer-events-none"
 						aria-hidden
@@ -172,32 +204,32 @@ export default function Testimonials() {
 						&ldquo;
 					</span>
 
-					{/* Quote — key remounts element, triggering the slide animation */}
 					<div className="relative z-10 text-center px-2 lg:px-12">
 						<div
 							key={`stars-${active}`}
-							className={`flex justify-center mb-6 ${animClass}`}
+							className={`flex justify-center mb-6 ${animationClass}`}
 						>
 							<Stars count={reviews[active].rating} />
 						</div>
+
 						<blockquote
 							key={active}
-							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance ${animClass}`}
+							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance ${animationClass}`}
 						>
 							&ldquo;{reviews[active].quote}&rdquo;
 						</blockquote>
 					</div>
 
-					{/* Author */}
 					<div
 						key={`author-${active}`}
-						className={`flex flex-col items-center mt-10 gap-3 ${animClass}`}
+						className={`flex flex-col items-center mt-10 gap-3 ${animationClass}`}
 					>
 						<div className="w-px h-8 bg-beige" />
 						<div className="text-center">
 							<p className="font-sans text-sm font-semibold text-dark tracking-wide">
 								{reviews[active].name}
 							</p>
+
 							<p className="font-sans text-xs text-muted mt-1 tracking-widest uppercase">
 								{reviews[active].country}
 							</p>
@@ -205,10 +237,9 @@ export default function Testimonials() {
 					</div>
 				</div>
 
-				{/* Controls: prev arrow · dots · next arrow */}
 				<div className="flex items-center justify-center gap-6 mt-10">
 					<button
-						onClick={goPrev}
+						onClick={goPrevious}
 						aria-label="Previous review"
 						className="w-9 h-9 flex items-center justify-center rounded-full border border-beige text-muted hover:border-canal-green hover:text-canal-green transition-all duration-300"
 					>
@@ -224,7 +255,7 @@ export default function Testimonials() {
 								role="tab"
 								aria-selected={i === active}
 								aria-label={`Review ${i + 1}`}
-								onClick={() => go(i, i > active ? "forward" : "backward")}
+								onClick={() => stepDirection(i, i > active ? "forward" : "backward")}
 								className={`rounded-full transition-all duration-500 ${i === active
 									? "w-7 h-1.5 bg-canal-green"
 									: "w-1.5 h-1.5 bg-beige hover:bg-canal-green/40"
@@ -244,19 +275,19 @@ export default function Testimonials() {
 					</button>
 				</div>
 
-				{/* Preview strip */}
 				<div className="mt-14 pt-10 border-t border-beige/60 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
 					{previewIndices.map((index) => {
 						const review = reviews[index];
 						return (
 							<button
 								key={review.name}
-								onClick={() => go(index, index > active ? "forward" : "backward")}
+								onClick={() => stepDirection(index, index > active ? "forward" : "backward")}
 								className="text-left group"
 							>
 								<p className="font-serif text-dark/45 text-sm leading-relaxed line-clamp-2 group-hover:text-dark/75 transition-colors duration-200">
 									&ldquo;{review.quote}&rdquo;
 								</p>
+
 								<p className="font-sans text-xs text-muted mt-2 group-hover:text-canal-green transition-colors duration-200">
 									— {review.name}, {review.country}
 								</p>
@@ -264,10 +295,7 @@ export default function Testimonials() {
 						);
 					})}
 				</div>
-
 			</div>
 		</section>
 	);
 }
-
-

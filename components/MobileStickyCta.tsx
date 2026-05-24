@@ -1,28 +1,31 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslation, type Translations } from "@/lib/i18n";
 
 export default function MobileStickyCta() {
-	const { translations: t } = useTranslation();
-	const [visible, setVisible] = useState(false);
+	const { translations }: { translations: Translations } = useTranslation();
+
+	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
 
 	useEffect(() => {
-		const onScroll = () => setVisible(window.scrollY > 500);
+		const onScroll: () => void = () => setVisible(window.scrollY > 500);
+
 		window.addEventListener("scroll", onScroll, { passive: true });
+
 		return () => window.removeEventListener("scroll", onScroll);
 	}, []);
 
 	return (
 		<div
-			className={`fixed bottom-0 left-0 right-0 z-40 md:hidden transition-transform duration-300 ${visible ? "translate-y-0" : "translate-y-full"
-				}`}
+			className={`fixed bottom-0 left-0 right-0 z-40 md:hidden transition-transform duration-300 ${visible ? "translate-y-0" : "translate-y-full"}`}
 		>
 			<div className="bg-white border-t border-beige/50 px-5 py-4 shadow-lg flex gap-3 items-center">
 				<a
 					href="#booking"
 					className="flex-1 text-center bg-canal-green text-white font-sans font-semibold text-sm py-3.5 rounded-full hover:bg-opacity-90 transition-all active:scale-95"
 				>
-					{t.mobile.checkAvailability}
+					{translations.mobile.checkAvailability}
 				</a>
 				<a
 					href="mailto:contact@labarque.fr"

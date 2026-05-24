@@ -1,49 +1,62 @@
 "use client";
+
 import { useRef, useEffect } from "react";
 
+function getTarget() {
+	const element: HTMLElement = document.documentElement;
+	const max: number = element.scrollHeight - element.clientHeight;
+
+	return max > 0 ? (element.scrollTop / max) * 100 : 0;
+}
+
 export default function ScrollProgressBar() {
-	const barRef = useRef<HTMLDivElement>(null);
+	const barReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		let rafId: number | null = null;
+		let animationFrameId: number | null = null;
 		let current = 0;
 
-		const getTarget = () => {
-			const el = document.documentElement;
-			const max = el.scrollHeight - el.clientHeight;
-			return max > 0 ? (el.scrollTop / max) * 100 : 0;
-		};
+		const update: () => void = () => {
+			const target: number = getTarget();
+			const difference: number = target - current;
 
-		const tick = () => {
-			const target = getTarget();
-			const diff = target - current;
-
-			if (Math.abs(diff) < 0.02) {
+			if (Math.abs(difference) < 0.02) {
 				current = target;
-				if (barRef.current) barRef.current.style.width = `${current}%`;
-				rafId = null;
+
+				if (barReference.current)
+					barReference.current.style.width = `${current}%`;
+
+				animationFrameId = null;
+
 				return;
 			}
 
-			current += diff * 0.18;
-			if (barRef.current) barRef.current.style.width = `${current}%`;
-			rafId = requestAnimationFrame(tick);
+			current += difference * 0.18;
+
+			if (barReference.current)
+				barReference.current.style.width = `${current}%`;
+
+			animationFrameId = requestAnimationFrame(update);
 		};
 
-		const onScroll = () => {
-			if (rafId === null) rafId = requestAnimationFrame(tick);
+		const onScroll: () => void = () => {
+			if (animationFrameId === null)
+				animationFrameId = requestAnimationFrame(update);
 		};
 
 		window.addEventListener("scroll", onScroll, { passive: true });
+
 		return () => {
 			window.removeEventListener("scroll", onScroll);
-			if (rafId !== null) cancelAnimationFrame(rafId);
+
+			if (animationFrameId !== null)
+				cancelAnimationFrame(animationFrameId);
 		};
 	}, []);
 
 	return (
 		<div
-			ref={barRef}
+			ref={barReference}
 			aria-hidden
 			className="fixed top-0 left-0 z-[60] h-[2px] bg-canal-green pointer-events-none"
 			style={{ width: "0%" }}
