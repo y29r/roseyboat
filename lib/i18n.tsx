@@ -79,7 +79,11 @@ export type Translations = {
 			items: Array<{ label: string; detail: string }>;
 		}>;
 		detailsLabel: string;
-		details: Array<{ question: string; answer: string }>;
+		showMoreLabel: string;
+		details: Array<{
+			label: string;
+			items: Array<{ question: string; answer: string }>;
+		}>;
 	};
 	location: {
 		label: string;
@@ -236,26 +240,45 @@ const dictionary: Record<Language, Translations> = {
 				},
 			],
 			detailsLabel: "Need more details?",
+			showMoreLabel: "See more questions",
 			details: [
 				{
-					question: "How does check-in work?",
-					answer: "Via a secure key lockbox from 15:00. Full instructions are sent after booking confirmation.",
+					label: "Booking & access",
+					items: [
+						{ question: "How do I make a booking?", answer: "Via Airbnb for secure payment, or send a direct inquiry if you prefer." },
+						{ question: "How does check-in work?", answer: "Self check-in via a secure key lockbox — no waiting. Full instructions arrive with your booking confirmation." },
+						{ question: "What time is check-in and check-out?", answer: "Check-in from 15:00, check-out before 11:00." },
+						{ question: "How do I receive the exact location after booking?", answer: "The precise mooring location is shared by message after your booking is confirmed." },
+					],
 				},
 				{
-					question: "Is parking really free?",
-					answer: "Yes — a short walk from the mooring. Exact details are included in your booking confirmation.",
+					label: "Location & privacy",
+					items: [
+						{ question: "Is the boat completely private?", answer: "Yes — no shared spaces, no other guests. The entire boat is yours for the duration of your stay." },
+						{ question: "Where exactly is the boat located?", answer: "Moored near Capestang on the Canal du Midi. The exact address is sent after booking." },
+						{ question: "Is the canal area safe and quiet at night?", answer: "Yes. The towpath is calm and well-used by locals. Most evenings on the water are beautifully still." },
+					],
 				},
 				{
-					question: "Is the boat entirely private?",
-					answer: "Yes. La Vie En Rose is a privately listed vessel — no shared spaces, no other guests.",
+					label: "Comfort & facilities",
+					items: [
+						{ question: "Is there heating on board?", answer: "Yes — diesel heating keeps the boat warm throughout the cooler months." },
+						{ question: "Is there a shower and what is it like?", answer: "Yes, a compact private shower and toilet are on board — clean, functional, and well-fitted." },
+						{ question: "Is there Wi-Fi available?", answer: "There is no dedicated Wi-Fi on board. Mobile data coverage in the area is generally good." },
+					],
 				},
 				{
-					question: "Are pets welcome?",
-					answer: "Well-behaved pets are welcome on board. The towpath is ideal for morning walks.",
+					label: "Access & logistics",
+					items: [
+						{ question: "Is parking really free and how far is it from the boat?", answer: "Yes, free — a short walk, typically 3–5 minutes from the mooring." },
+						{ question: "Are pets allowed on board?", answer: "Well-behaved pets are welcome. The towpath is ideal for morning walks." },
+					],
 				},
 				{
-					question: "How do I make a booking?",
-					answer: "Via Airbnb for secure payment, or send a direct inquiry if you prefer.",
+					label: "Good to know",
+					items: [
+						{ question: "What should I bring with me?", answer: "Towels and linen are provided. Bring your own food and drink, or stock up in Capestang village on arrival." },
+					],
 				},
 			],
 		},
@@ -436,26 +459,45 @@ const dictionary: Record<Language, Translations> = {
 				},
 			],
 			detailsLabel: "Plus de détails ?",
+			showMoreLabel: "Voir plus de questions",
 			details: [
 				{
-					question: "Comment fonctionne l'arrivée ?",
-					answer: "Via une boîte à clés sécurisée dès 15h00. Les instructions complètes sont envoyées après confirmation de réservation.",
+					label: "Réservation & accès",
+					items: [
+						{ question: "Comment effectuer une réservation ?", answer: "Via Airbnb pour un paiement sécurisé, ou envoyez une demande directe si vous préférez." },
+						{ question: "Comment fonctionne l'arrivée ?", answer: "Accès autonome via une boîte à clés sécurisée — aucune attente. Les instructions complètes arrivent avec votre confirmation." },
+						{ question: "Quels sont les horaires d'arrivée et de départ ?", answer: "Arrivée dès 15h00, départ avant 11h00." },
+						{ question: "Comment reçois-je l'adresse exacte après ma réservation ?", answer: "L'emplacement précis de l'amarrage est communiqué par message après confirmation de votre réservation." },
+					],
 				},
 				{
-					question: "Le parking est-il vraiment gratuit ?",
-					answer: "Oui — à quelques minutes de l'amarrage. Les détails exacts sont inclus dans votre confirmation de réservation.",
+					label: "Lieu & intimité",
+					items: [
+						{ question: "Le bateau est-il entièrement privatif ?", answer: "Oui — aucun espace partagé, aucun autre voyageur. Le bateau est entièrement à vous." },
+						{ question: "Où se trouve exactement le bateau ?", answer: "Amarré près de Capestang sur le Canal du Midi. L'adresse exacte est envoyée après réservation." },
+						{ question: "Le canal est-il sûr et calme la nuit ?", answer: "Oui. Le chemin de halage est tranquille et fréquenté par les locaux. Les soirées sur l'eau sont généralement paisibles." },
+					],
 				},
 				{
-					question: "Le bateau est-il entièrement privatif ?",
-					answer: "Oui. La Vie En Rose est une location privée — pas d'espaces partagés, pas d'autres voyageurs.",
+					label: "Confort & équipements",
+					items: [
+						{ question: "Y a-t-il un chauffage à bord ?", answer: "Oui — le chauffage diesel maintient le bateau au chaud pendant les mois plus frais." },
+						{ question: "Y a-t-il une douche et comment est-elle ?", answer: "Oui, une douche privée compacte et des toilettes sont à bord — propres, fonctionnelles et bien équipées." },
+						{ question: "Y a-t-il le Wi-Fi ?", answer: "Il n'y a pas de Wi-Fi dédié à bord. La couverture réseau mobile dans la zone est généralement bonne." },
+					],
 				},
 				{
-					question: "Les animaux sont-ils acceptés ?",
-					answer: "Les animaux bien tenus sont les bienvenus à bord. Le chemin de halage est idéal pour les promenades matinales.",
+					label: "Accès & logistique",
+					items: [
+						{ question: "Le parking est-il vraiment gratuit et à quelle distance du bateau ?", answer: "Oui, gratuit — à quelques minutes à pied, généralement 3 à 5 minutes de l'amarrage." },
+						{ question: "Les animaux sont-ils acceptés ?", answer: "Les animaux bien tenus sont les bienvenus. Le chemin de halage est idéal pour les promenades matinales." },
+					],
 				},
 				{
-					question: "Comment effectuer une réservation ?",
-					answer: "Via Airbnb pour un paiement sécurisé, ou envoyez une demande directe si vous préférez.",
+					label: "Bon à savoir",
+					items: [
+						{ question: "Que dois-je apporter ?", answer: "Les serviettes et le linge de lit sont fournis. Prévoyez vos provisions ou faites vos courses au village de Capestang." },
+					],
 				},
 			],
 		},
@@ -636,26 +678,45 @@ const dictionary: Record<Language, Translations> = {
 				},
 			],
 			detailsLabel: "Noch Fragen?",
+			showMoreLabel: "Weitere Fragen anzeigen",
 			details: [
 				{
-					question: "Wie funktioniert der Check-in?",
-					answer: "Per Schlüsselbox ab 15:00 Uhr. Vollständige Anweisungen werden nach der Buchungsbestätigung zugesandt.",
+					label: "Buchung & Zugang",
+					items: [
+						{ question: "Wie kann ich buchen?", answer: "Über Airbnb für sichere Zahlung, oder senden Sie eine direkte Anfrage." },
+						{ question: "Wie funktioniert der Check-in?", answer: "Selbst-Check-in per Schlüsselbox — kein Warten. Vollständige Anweisungen werden mit Ihrer Buchungsbestätigung zugesandt." },
+						{ question: "Wann ist Check-in und Check-out?", answer: "Check-in ab 15:00 Uhr, Check-out vor 11:00 Uhr." },
+						{ question: "Wie erhalte ich nach der Buchung den genauen Standort?", answer: "Der genaue Liegeplatz wird nach Buchungsbestätigung per Nachricht mitgeteilt." },
+					],
 				},
 				{
-					question: "Ist der Parkplatz wirklich kostenlos?",
-					answer: "Ja — kurzer Fußweg vom Liegeplatz. Details sind in Ihrer Buchungsbestätigung enthalten.",
+					label: "Lage & Privatsphäre",
+					items: [
+						{ question: "Ist das Boot vollständig privat?", answer: "Ja — keine geteilten Bereiche, keine anderen Gäste. Das gesamte Boot gehört Ihnen." },
+						{ question: "Wo genau liegt das Boot?", answer: "Vertäut bei Capestang am Canal du Midi. Die genaue Adresse wird nach der Buchung zugesandt." },
+						{ question: "Ist der Kanalbereich nachts sicher und ruhig?", answer: "Ja. Der Leinpfad ist ruhig und von Einheimischen genutzt. Die Abende auf dem Wasser sind meist sehr still." },
+					],
 				},
 				{
-					question: "Ist das Boot vollständig privat?",
-					answer: "Ja. La Vie En Rose ist ein privat vermietetes Boot — keine geteilten Bereiche, keine anderen Gäste.",
+					label: "Komfort & Ausstattung",
+					items: [
+						{ question: "Gibt es Heizung an Bord?", answer: "Ja — eine Diesel-Heizung hält das Boot in den kühleren Monaten warm." },
+						{ question: "Gibt es eine Dusche und wie ist sie?", answer: "Ja, eine kompakte private Dusche und Toilette sind an Bord — sauber, funktional und gut ausgestattet." },
+						{ question: "Gibt es WLAN an Bord?", answer: "Es gibt kein dediziertes WLAN an Bord. Die mobile Datenverbindung in der Gegend ist im Allgemeinen gut." },
+					],
 				},
 				{
-					question: "Sind Haustiere willkommen?",
-					answer: "Gut erzogene Haustiere sind herzlich willkommen. Der Leinpfad ist ideal für Morgenrunden.",
+					label: "Zugang & Logistik",
+					items: [
+						{ question: "Ist der Parkplatz wirklich kostenlos und wie weit ist er vom Boot?", answer: "Ja, kostenlos — ein kurzer Fußweg, in der Regel 3–5 Minuten vom Liegeplatz." },
+						{ question: "Sind Haustiere erlaubt?", answer: "Gut erzogene Haustiere sind herzlich willkommen. Der Leinpfad ist ideal für Morgenrunden." },
+					],
 				},
 				{
-					question: "Wie buche ich?",
-					answer: "Über Airbnb für sichere Zahlung, oder senden Sie eine direkte Anfrage.",
+					label: "Gut zu wissen",
+					items: [
+						{ question: "Was sollte ich mitbringen?", answer: "Handtücher und Bettwäsche werden gestellt. Bringen Sie Lebensmittel mit oder kaufen Sie im Dorf Capestang ein." },
+					],
 				},
 			],
 		},
@@ -836,26 +897,45 @@ const dictionary: Record<Language, Translations> = {
 				},
 			],
 			detailsLabel: "Meer weten?",
+			showMoreLabel: "Meer vragen bekijken",
 			details: [
 				{
-					question: "Hoe verloopt het inchecken?",
-					answer: "Via een beveiligde sleutelkluis vanaf 15:00 uur. Volledige instructies worden na boeking toegestuurd.",
+					label: "Boeking & toegang",
+					items: [
+						{ question: "Hoe maak ik een reservering?", answer: "Via Airbnb voor veilig betalen, of stuur een directe aanvraag als u dat prefereert." },
+						{ question: "Hoe verloopt het inchecken?", answer: "Zelf inchecken via een beveiligde sleutelkluis — geen wachten. Volledige instructies volgen met uw boekingsbevestiging." },
+						{ question: "Wat zijn de check-in en check-out tijden?", answer: "Check-in vanaf 15:00 uur, check-out vóór 11:00 uur." },
+						{ question: "Hoe ontvang ik de exacte locatie na boeking?", answer: "De precieze aanlegplaats wordt na bevestiging van uw boeking per bericht gedeeld." },
+					],
 				},
 				{
-					question: "Is parkeren echt gratis?",
-					answer: "Ja — op korte loopafstand van de aanlegplaats. Details zijn opgenomen in uw boekingsbevestiging.",
+					label: "Locatie & privacy",
+					items: [
+						{ question: "Is de boot volledig privé?", answer: "Ja — geen gedeelde ruimtes, geen andere gasten. De hele boot is voor u." },
+						{ question: "Waar ligt de boot precies?", answer: "Aangemeerd bij Capestang aan het Canal du Midi. Het exacte adres volgt na uw boeking." },
+						{ question: "Is het kanaalgebied 's nachts veilig en rustig?", answer: "Ja. Het jaagpad is rustig en door locals goed gebruikt. De avonden op het water zijn doorgaans prachtig stil." },
+					],
 				},
 				{
-					question: "Is de boot volledig privé?",
-					answer: "Ja. La Vie En Rose is een privé gehuurde boot — geen gedeelde ruimtes, geen andere gasten.",
+					label: "Comfort & faciliteiten",
+					items: [
+						{ question: "Is er verwarming aan boord?", answer: "Ja — dieselverwarming houdt de boot warm tijdens de koelere maanden." },
+						{ question: "Is er een douche en hoe is die?", answer: "Ja, een compacte privédouche en toilet zijn aan boord — schoon, functioneel en goed uitgerust." },
+						{ question: "Is er Wi-Fi beschikbaar?", answer: "Er is geen eigen Wi-Fi aan boord. Mobiele data-dekking in het gebied is over het algemeen goed." },
+					],
 				},
 				{
-					question: "Zijn huisdieren welkom?",
-					answer: "Goed opgevoede huisdieren zijn welkom aan boord. Het jaagpad is ideaal voor ochtendwandelingen.",
+					label: "Toegang & logistiek",
+					items: [
+						{ question: "Is parkeren echt gratis en hoe ver is het van de boot?", answer: "Ja, gratis — op een paar minuten lopen, doorgaans 3 tot 5 minuten van de aanlegplaats." },
+						{ question: "Zijn huisdieren toegestaan?", answer: "Goed opgevoede huisdieren zijn welkom. Het jaagpad is ideaal voor ochtendwandelingen." },
+					],
 				},
 				{
-					question: "Hoe maak ik een reservering?",
-					answer: "Via Airbnb voor veilig betalen, of stuur een directe aanvraag als u dat prefereert.",
+					label: "Handig om te weten",
+					items: [
+						{ question: "Wat moet ik meenemen?", answer: "Handdoeken en beddengoed zijn aanwezig. Breng uw eigen eten en drinken mee, of sla in op in het dorp Capestang." },
+					],
 				},
 			],
 		},

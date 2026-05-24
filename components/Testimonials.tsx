@@ -9,7 +9,7 @@ type Review = {
 	quote: string;
 	name: string;
 	country: string;
-	flag: string;
+	code: string;
 	rating: number;
 };
 
@@ -21,7 +21,7 @@ const reviews: Review[] = [
 			"Waking up to water and birdsong every morning. The canal at dawn is something I'll never forget.",
 		name: "Sophie",
 		country: "Netherlands",
-		flag: "🇳🇱",
+		code: "NL",
 		rating: 5,
 	},
 	{
@@ -29,7 +29,7 @@ const reviews: Review[] = [
 			"Perfectly clean, beautifully restored. The kitchen had everything and the beds were incredibly comfortable.",
 		name: "James",
 		country: "United Kingdom",
-		flag: "🇬🇧",
+		code: "GB",
 		rating: 5,
 	},
 	{
@@ -37,7 +37,7 @@ const reviews: Review[] = [
 			"We cycled to three villages and a medieval citadel. Having the boat as a base made it feel like a real adventure.",
 		name: "Lena",
 		country: "Germany",
-		flag: "🇩🇪",
+		code: "DE",
 		rating: 5,
 	},
 	{
@@ -45,7 +45,7 @@ const reviews: Review[] = [
 			"Quiet, honest, and utterly peaceful. Nothing pretentious — just a beautiful place on a beautiful waterway.",
 		name: "Thomas",
 		country: "France",
-		flag: "🇫🇷",
+		code: "FR",
 		rating: 5,
 	},
 	{
@@ -53,7 +53,7 @@ const reviews: Review[] = [
 			"The host was wonderfully helpful with cycling routes. The towpath access is just incredible.",
 		name: "Camille",
 		country: "Canada",
-		flag: "🇨🇦",
+		code: "CA",
 		rating: 5,
 	},
 	{
@@ -61,7 +61,7 @@ const reviews: Review[] = [
 			"We came for three nights and wished we'd booked a week. The sunsets from the deck were worth the trip alone.",
 		name: "Erik",
 		country: "Sweden",
-		flag: "🇸🇪",
+		code: "SE",
 		rating: 5,
 	},
 ];
@@ -179,13 +179,19 @@ export default function Testimonials() {
 							</p>
 
 							<p className="font-sans text-xs text-muted mt-1 tracking-widest uppercase flex items-center justify-center gap-1.5">
-								<span className="text-sm leading-none" aria-hidden="true">{reviews[active].flag}</span>
+								<img
+									src={`https://flagcdn.com/w20/${reviews[active].code.toLowerCase()}.png`}
+									width={16}
+									height={12}
+									alt={reviews[active].country}
+									className="rounded-[1px] object-cover shrink-0"
+								/>
 								{reviews[active].country}
 							</p>
 						</div>
 
 						<div
-							className="review-progress-bar mt-1 w-10 h-px bg-beige/60 overflow-hidden rounded-full"
+							className="review-progress-bar mt-1 w-[4rem] h-[2px] bg-beige/60 overflow-hidden rounded-full"
 							aria-hidden
 						>
 							<div
@@ -251,8 +257,14 @@ export default function Testimonials() {
 									&ldquo;{review.quote}&rdquo;
 								</p>
 
-								<p className="font-sans text-xs text-muted mt-2 flex items-center gap-1 group-hover:text-canal-green transition-colors duration-200">
-									<span aria-hidden="true">{review.flag}</span>
+								<p className="font-sans text-xs text-muted mt-2 flex items-center gap-1.5 group-hover:text-canal-green transition-colors duration-200">
+									<img
+										src={`https://flagcdn.com/w20/${review.code.toLowerCase()}.png`}
+										width={14}
+										height={10}
+										alt={review.country}
+										className="rounded-[1px] object-cover shrink-0"
+									/>
 									<span>— {review.name}, {review.country}</span>
 								</p>
 							</button>
