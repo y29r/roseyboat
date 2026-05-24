@@ -1,29 +1,20 @@
-const nearby = [
-	{ label: "Capestang", detail: "Village bakery, café & weekly market — on foot" },
-	{ label: "Béziers", detail: "Historic city, covered market, Friday brocante — 20 km" },
-	{ label: "Narbonne", detail: "Roman city, canal du Midi junction — 30 km" },
-	{ label: "Carcassonne", detail: "Medieval citadel & vineyard routes — 55 km" },
-	{ label: "Colombiers", detail: "Canal locks, quiet towpath village — 8 km" },
-];
-
-const cyclingRoutes = [
-	"Canal du Midi Greenway (EuroVelo 8) runs directly alongside",
-	"Flat, shaded towpath east to Béziers — approx. 20 km, all abilities",
-	"West toward Colombiers locks and the Tunnel de Malpas — a full day ride",
-	"Bike hire available in Béziers and Capestang village",
-];
+"use client";
+import { useT } from "@/lib/i18n";
 
 export default function Location() {
+	const { t } = useT();
+	const nearby = t.location.nearby;
+	const cyclingRoutes = t.location.cycling;
 	return (
 		<section id="location" className="py-20 lg:py-32 bg-cream">
 			<div className="max-w-7xl mx-auto px-6 lg:px-10">
 				{/* Header */}
 				<div className="max-w-xl mb-14">
 					<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
-						Location
+						{t.location.label}
 					</p>
 					<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug">
-						Moored near Capestang on the Canal du Midi
+						{t.location.heading}
 					</h2>
 				</div>
 
@@ -31,8 +22,8 @@ export default function Location() {
 					{/* Google Maps embed */}
 					<div className="rounded-2xl overflow-hidden shadow-sm border border-beige/40" style={{ height: "420px" }}>
 						<iframe
-							title="La Rosée mooring location"
-							src="https://www.google.com/maps?q=43.3310892,3.0454889&z=14&output=embed"
+							title="La Vie En Rose mooring location"
+							src="https://www.google.com/maps?q=Capestang,France&z=14&output=embed"
 							width="100%"
 							height="100%"
 							style={{ border: 0 }}
@@ -46,19 +37,19 @@ export default function Location() {
 					<div className="flex flex-col gap-8">
 						{/* About the mooring */}
 						<div>
-							<h3 className="font-serif text-2xl text-dark mb-4 font-light">About the mooring</h3>
+							<h3 className="font-serif text-2xl text-dark mb-4 font-light">{t.location.mooringHeading}</h3>
 							<p className="font-sans text-muted text-base leading-relaxed mb-4">
-								La Rosée is moored near Capestang — a small village on the Canal du Midi, surrounded by vineyards and garrigue, in the Hérault département of southern France.
+								{t.location.mooringText1}
 							</p>
 							<p className="font-sans text-muted text-base leading-relaxed">
-								The canal here is quiet and unhurried. Capestang village is on foot. Béziers is a short ride east. The plane tree canopy is unbroken for miles in either direction.
+								{t.location.mooringText2}
 							</p>
 						</div>
 
 						{/* Nearby places */}
 						<div>
 							<h4 className="font-sans text-xs tracking-[0.15em] uppercase text-muted mb-4 pb-2 border-b border-beige/50">
-								Nearby
+								{t.location.nearbyLabel}
 							</h4>
 							<ul className="space-y-3">
 								{nearby.map((place) => (
@@ -76,13 +67,13 @@ export default function Location() {
 						{/* Cycling */}
 						<div>
 							<h4 className="font-sans text-xs tracking-[0.15em] uppercase text-muted mb-4 pb-2 border-b border-beige/50">
-								Cycling Access
+								{t.location.cyclingLabel}
 							</h4>
 							<ul className="space-y-2">
-								{cyclingRoutes.map((r) => (
-									<li key={r} className="flex items-start gap-3">
+								{cyclingRoutes.map((route) => (
+									<li key={route} className="flex items-start gap-3">
 										<span className="mt-1 w-1.5 h-1.5 rounded-full bg-canal-blue flex-shrink-0" />
-										<span className="font-sans text-sm text-muted leading-relaxed">{r}</span>
+										<span className="font-sans text-sm text-muted leading-relaxed">{route}</span>
 									</li>
 								))}
 							</ul>
@@ -91,7 +82,7 @@ export default function Location() {
 						{/* Privacy note */}
 						<div className="bg-white rounded-xl border border-beige/40 px-5 py-4">
 							<p className="font-sans text-xs text-muted leading-relaxed">
-								<span className="font-semibold text-dark">Exact mooring location</span> is shared with guests after booking confirmation.
+								{t.location.privacyNote}
 							</p>
 						</div>
 					</div>

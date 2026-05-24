@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { I18nProvider } from "@/lib/i18n";
 
 const cormorant = Cormorant_Garamond({
 	subsets: ["latin"],
@@ -18,11 +19,11 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-	title: "La Rosée — Canal du Midi Narrowboat Retreat",
+	title: "La Vie En Rose — Canal du Midi Narrowboat Retreat",
 	description:
 		"Stay aboard a restored traditional canal boat on the Canal du Midi, southern France. A slow, quiet escape for cyclists, romantics, and wanderers.",
 	openGraph: {
-		title: "La Rosée — Canal du Midi Narrowboat Retreat",
+		title: "La Vie En Rose — Canal du Midi Narrowboat Retreat",
 		description: "A slow, quiet escape on the water in southern France.",
 		type: "website",
 	},
@@ -36,8 +37,10 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
 			<body className="antialiased">
-				<SmoothScroll />
-				{children}
+				<I18nProvider>
+					<SmoothScroll />
+					{children}
+				</I18nProvider>
 			</body>
 		</html>
 	);

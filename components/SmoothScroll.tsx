@@ -1,16 +1,11 @@
-﻿'use client';
+﻿"use client";
 
-import { useEffect } from 'react';
-import Lenis from 'lenis';
+import { useEffect } from "react";
+import Lenis from "lenis";
 
-/**
- * Lenis smooth scroll — intercepts wheel events and smoothly drives
- * native window.scrollY so CSS scroll-driven animations still work.
- * Disabled when prefers-reduced-motion is set.
- */
 export default function SmoothScroll() {
 	useEffect(() => {
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
 		const lenis = new Lenis({
 			duration: 0.9,

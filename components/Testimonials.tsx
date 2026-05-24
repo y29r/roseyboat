@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useT } from "@/lib/i18n";
 
 const reviews = [
 	{
@@ -50,7 +51,7 @@ function Stars({ count }: { count: number }) {
 	return (
 		<div className="flex gap-1">
 			{Array.from({ length: count }).map((_, i) => (
-				<svg key={i} className="w-3.5 h-3.5 text-canal-green" viewBox="0 0 20 20" fill="currentColor">
+				<svg key={i} className="w-4 h-4 text-canal-green" viewBox="0 0 20 20" fill="currentColor">
 					<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
 				</svg>
 			))}
@@ -61,18 +62,17 @@ function Stars({ count }: { count: number }) {
 type Dir = "forward" | "backward";
 
 export default function Testimonials() {
+	const { t } = useT();
 	const [active, setActive] = useState(0);
 	const [dir, setDir] = useState<Dir>("forward");
 	const [timerKey, setTimerKey] = useState(0);
 	const touchStartX = useRef<number | null>(null);
-	// Ref to the quote+author wrapper so we can animate its height between reviews
 	const quoteWrapRef = useRef<HTMLDivElement>(null);
 	const prevHeightRef = useRef(0);
-	const n = reviews.length;
+	const reviewCount = reviews.length;
 
 	// Navigate and reset the auto-advance timer
 	const go = useCallback((newIdx: number, direction: Dir) => {
-		// Capture height before React re-renders with new content
 		if (quoteWrapRef.current) {
 			prevHeightRef.current = quoteWrapRef.current.offsetHeight;
 		}
@@ -81,19 +81,17 @@ export default function Testimonials() {
 		setTimerKey((k) => k + 1);
 	}, []);
 
-	// Auto-advance — resets whenever timerKey changes (i.e. on manual nav)
 	useEffect(() => {
-		const t = setInterval(() => {
+		const interval = setInterval(() => {
 			if (quoteWrapRef.current) {
 				prevHeightRef.current = quoteWrapRef.current.offsetHeight;
 			}
 			setDir("forward");
-			setActive((i) => (i + 1) % n);
+			setActive((i) => (i + 1) % reviewCount);
 		}, 6500);
-		return () => clearInterval(t);
-	}, [timerKey, n]);
+		return () => clearInterval(interval);
+	}, [timerKey, reviewCount]);
 
-	// Smoothly animate the wrapper height when review text length changes
 	useEffect(() => {
 		const el = quoteWrapRef.current;
 		if (!el || prevHeightRef.current === 0) return;
@@ -126,8 +124,8 @@ export default function Testimonials() {
 		};
 	}, [active]);
 
-	const goNext = () => go((active + 1) % n, "forward");
-	const goPrev = () => go((active - 1 + n) % n, "backward");
+	const goNext = () => go((active + 1) % reviewCount, "forward");
+	const goPrev = () => go((active - 1 + reviewCount) % reviewCount, "backward");
 
 	const onTouchStart = (e: React.TouchEvent) => {
 		touchStartX.current = e.touches[0].clientX;
@@ -140,7 +138,7 @@ export default function Testimonials() {
 	};
 
 	const animClass = dir === "forward" ? "animate-slide-in-right" : "animate-slide-in-left";
-	const previewIndices = [1, 2, 3].map((offset) => (active + offset) % n);
+	const previewIndices = [1, 2, 3].map((offset) => (active + offset) % reviewCount);
 
 	return (
 		<section id="testimonials" className="py-20 lg:py-32 bg-[#EFECE4] overflow-hidden">
@@ -149,12 +147,12 @@ export default function Testimonials() {
 				{/* Header */}
 				<div className="flex flex-col items-center text-center mb-16">
 					<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-5">
-						Guest Reviews
+						{t.testimonials.label}
 					</p>
 					<div className="flex items-center gap-3">
 						<Stars count={5} />
 						<span className="font-sans text-sm text-muted">
-							<strong className="text-dark">4.97</strong> · 42 reviews
+							<strong className="text-dark">4.97</strong> {t.testimonials.ratingText}
 						</span>
 					</div>
 				</div>
@@ -176,6 +174,12 @@ export default function Testimonials() {
 
 					{/* Quote — key remounts element, triggering the slide animation */}
 					<div className="relative z-10 text-center px-2 lg:px-12">
+						<div
+							key={`stars-${active}`}
+							className={`flex justify-center mb-6 ${animClass}`}
+						>
+							<Stars count={reviews[active].rating} />
+						</div>
 						<blockquote
 							key={active}
 							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance ${animClass}`}
@@ -242,19 +246,19 @@ export default function Testimonials() {
 
 				{/* Preview strip */}
 				<div className="mt-14 pt-10 border-t border-beige/60 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">
-					{previewIndices.map((idx) => {
-						const r = reviews[idx];
+					{previewIndices.map((index) => {
+						const review = reviews[index];
 						return (
 							<button
-								key={r.name}
-								onClick={() => go(idx, idx > active ? "forward" : "backward")}
+								key={review.name}
+								onClick={() => go(index, index > active ? "forward" : "backward")}
 								className="text-left group"
 							>
 								<p className="font-serif text-dark/45 text-sm leading-relaxed line-clamp-2 group-hover:text-dark/75 transition-colors duration-200">
-									&ldquo;{r.quote}&rdquo;
+									&ldquo;{review.quote}&rdquo;
 								</p>
 								<p className="font-sans text-xs text-muted mt-2 group-hover:text-canal-green transition-colors duration-200">
-									— {r.name}, {r.country}
+									— {review.name}, {review.country}
 								</p>
 							</button>
 						);

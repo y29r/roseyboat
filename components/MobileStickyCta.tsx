@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useT } from "@/lib/i18n";
 
 export default function MobileStickyCta() {
+	const { t } = useT();
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
@@ -20,7 +22,7 @@ export default function MobileStickyCta() {
 					href="#booking"
 					className="flex-1 text-center bg-canal-green text-white font-sans font-semibold text-sm py-3.5 rounded-full hover:bg-opacity-90 transition-all active:scale-95"
 				>
-					Check Availability
+					{t.mobile.checkAvailability}
 				</a>
 				<a
 					href="mailto:contact@labarque.fr"

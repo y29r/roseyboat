@@ -1,16 +1,9 @@
-const included = [
-	{ label: "Heating", detail: "Diesel heating for cooler months" },
-	{ label: "Towels & linen", detail: "Provided for all guests" },
-	{ label: "Kitchen", detail: "Hob, oven, and fridge — self-cater as you please" },
-	{ label: "Coffee & tea", detail: "Complimentary, with a French press on board" },
-	{ label: "Snacks & drinks", detail: "Crisps, something sweet, cold beers, and bottled water" },
-	{ label: "Bike storage", detail: "Secure lock points on the towpath" },
-	{ label: "Parking", detail: "Free, a short walk from the mooring" },
-	{ label: "Check-in", detail: "From 15:00 · self check-in by lockbox" },
-	{ label: "Check-out", detail: "Before 11:00" },
-];
+"use client";
+import { useT } from "@/lib/i18n";
 
 export default function Amenities() {
+	const { t } = useT();
+	const included = t.amenities.items;
 	return (
 		<section id="amenities" className="py-20 lg:py-32 bg-white">
 			<div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -19,23 +12,23 @@ export default function Amenities() {
 					{/* Left — intro */}
 					<div className="reveal-left">
 						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
-							Practical Info
+							{t.amenities.label}
 						</p>
 						<h2 className="font-serif text-4xl lg:text-5xl font-light text-dark leading-snug mb-6 title-underline">
-							A comfortable stay, simply equipped
+							{t.amenities.heading}
 						</h2>
 						<p className="font-sans text-muted text-base lg:text-lg leading-relaxed font-light">
-							Everything needed for a peaceful few days on the water — nothing excessive, nothing missing. The boat is compact by nature, but thoughtfully fitted out for comfort in all seasons.
+							{t.amenities.desc1}
 						</p>
 						<p className="font-sans text-muted text-base leading-relaxed font-light mt-4">
-							Cyclists are particularly well catered for, with secure storage and direct access to the Canal du Midi greenway from the mooring.
+							{t.amenities.desc2}
 						</p>
 					</div>
 
 					{/* Right — inclusions */}
 					<div className="reveal-right">
 						<p className="font-sans text-xs text-canal-green tracking-[0.2em] uppercase mb-4">
-							Included during your stay
+							{t.amenities.includedLabel}
 						</p>
 						<ul className="divide-y divide-beige/60">
 							{included.map((item) => (

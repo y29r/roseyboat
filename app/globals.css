@@ -38,30 +38,11 @@
 
 @keyframes image-parallax {
 	from {
-		transform: translateY(100px);
+		transform: translateY(60px);
 	}
 
 	to {
-		transform: translateY(-100px);
-	}
-}
-
-.parallax-container {
-	view-timeline-name: --image-scroll;
-	view-timeline-axis: block;
-}
-
-.parallax-inner {
-	animation: image-parallax linear both;
-	animation-timeline: --image-scroll;
-	animation-range: cover;
-	will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.parallax-inner {
-		animation: none;
-		transform: none;
+		transform: translateY(-60px);
 	}
 }
 
