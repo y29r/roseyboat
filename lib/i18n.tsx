@@ -54,6 +54,11 @@ export type Translations = {
 		bookHeading: string;
 		bookDesc: string;
 		perNight: string;
+		nights: string;
+		estimateLabel: string;
+		discountLabel: string;
+		includedHeading: string;
+		included: string[];
 		minStay: string;
 		minStayVal: string;
 		checkIn: string;
@@ -117,6 +122,11 @@ export type Translations = {
 	};
 	mobile: {
 		checkAvailability: string;
+	};
+	cookies: {
+		message: string;
+		accept: string;
+		decline: string;
 	};
 };
 
@@ -187,6 +197,17 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose is listed on Airbnb for secure online booking and payment. Use the button below to check live availability and reserve your dates.",
 			perNight: "/ night",
+			nights: "nights",
+			estimateLabel: "Estimated total",
+			discountLabel: "15% off · 5+ nights",
+			includedHeading: "What's included",
+			included: [
+				"Linen & towels",
+				"Self check-in",
+				"Up to 4 guests",
+				"Pets welcome",
+				"All-season heating",
+			],
 			minStay: "Min. stay",
 			minStayVal: "3 nights",
 			checkIn: "Check-in",
@@ -338,6 +359,11 @@ const dictionary: Record<Language, Translations> = {
 		mobile: {
 			checkAvailability: "Check Availability",
 		},
+		cookies: {
+			message: "We use cookies to improve your experience and understand how the site is used. You can decline if you prefer.",
+			accept: "Accept",
+			decline: "Decline",
+		},
 	},
 
 	FR: {
@@ -406,6 +432,17 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose est référencée sur Airbnb pour une réservation et un paiement sécurisés. Utilisez le bouton ci-dessous pour vérifier les disponibilités en temps réel.",
 			perNight: "/ nuit",
+			nights: "nuits",
+			estimateLabel: "Total estimé",
+			discountLabel: "−15 % dès 5 nuits",
+			includedHeading: "Ce qui est inclus",
+			included: [
+				"Linge & serviettes",
+				"Arrivée autonome",
+				"Jusqu'à 4 personnes",
+				"Animaux bienvenus",
+				"Chauffage toutes saisons",
+			],
 			minStay: "Durée min.",
 			minStayVal: "3 nuits",
 			checkIn: "Arrivée",
@@ -557,6 +594,11 @@ const dictionary: Record<Language, Translations> = {
 		mobile: {
 			checkAvailability: "Vérifier les disponibilités",
 		},
+		cookies: {
+			message: "Nous utilisons des cookies pour améliorer votre expérience et comprendre comment le site est utilisé. Vous pouvez refuser si vous le souhaitez.",
+			accept: "Accepter",
+			decline: "Refuser",
+		},
 	},
 
 	DE: {
@@ -625,6 +667,17 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose ist auf Airbnb gelistet für sichere Online-Buchung und Zahlung. Nutzen Sie den Button unten, um die aktuelle Verfügbarkeit zu prüfen und Ihre Termine zu reservieren.",
 			perNight: "/ Nacht",
+			nights: "Nächte",
+			estimateLabel: "Geschätzter Gesamtpreis",
+			discountLabel: "15 % Rabatt ab 5 Nächten",
+			includedHeading: "Im Preis enthalten",
+			included: [
+				"Bettwäsche & Handtücher",
+				"Self-Check-in",
+				"Bis zu 4 Gäste",
+				"Haustiere willkommen",
+				"Ganzjährige Heizung",
+			],
 			minStay: "Mind. Aufenthalt",
 			minStayVal: "3 Nächte",
 			checkIn: "Check-in",
@@ -776,6 +829,11 @@ const dictionary: Record<Language, Translations> = {
 		mobile: {
 			checkAvailability: "Verfügbarkeit prüfen",
 		},
+		cookies: {
+			message: "Wir verwenden Cookies, um Ihr Erlebnis zu verbessern und die Nutzung der Website zu verstehen. Sie können ablehnen, wenn Sie möchten.",
+			accept: "Akzeptieren",
+			decline: "Ablehnen",
+		},
 	},
 
 	NL: {
@@ -844,6 +902,17 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose staat op Airbnb voor veilig online boeken en betalen. Gebruik de knop hieronder om de actuele beschikbaarheid te controleren en uw datums te reserveren.",
 			perNight: "/ nacht",
+			nights: "nachten",
+			estimateLabel: "Geschatte totaalprijs",
+			discountLabel: "15% korting bij 5+ nachten",
+			includedHeading: "Wat is inbegrepen",
+			included: [
+				"Linnengoed & handdoeken",
+				"Zelf inchecken",
+				"Tot 4 gasten",
+				"Huisdieren welkom",
+				"Verwarming het hele jaar",
+			],
 			minStay: "Min. verblijf",
 			minStayVal: "3 nachten",
 			checkIn: "Inchecken",
@@ -994,6 +1063,11 @@ const dictionary: Record<Language, Translations> = {
 		},
 		mobile: {
 			checkAvailability: "Beschikbaarheid controleren",
+		},
+		cookies: {
+			message: "We gebruiken cookies om uw ervaring te verbeteren en te begrijpen hoe de site wordt gebruikt. U kunt weigeren als u dat liever heeft.",
+			accept: "Accepteren",
+			decline: "Weigeren",
 		},
 	},
 };
