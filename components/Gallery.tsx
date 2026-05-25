@@ -115,13 +115,13 @@ function Lightbox({
 
 	onClose: () => void;
 }) {
-	const [mediaIndex, setMediaIndex]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(initialIndex);
-	const [playing, setPlaying]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(initialPlay);
+	const [mediaIndex, setMediaIndex]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(initialIndex);
+	const [playing, setPlaying]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(initialPlay);
 
 	const { translations }: { translations: Translations } = useTranslation();
 
 	const filmReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
-	const touchX: React.RefObject<number> = useRef(0);
+	const touchX: React.RefObject<number> = useRef<number>(0);
 
 	const currentMediaItem: MediaItem = items[mediaIndex];
 
@@ -377,8 +377,8 @@ export default function Gallery() {
 	const { translations }: { translations: any } = useTranslation();
 	const [lightbox, setLightbox]: [{ index: number; play: boolean } | null, React.Dispatch<React.SetStateAction<{ index: number; play: boolean } | null>>] = useState<{ index: number; play: boolean } | null>(null);
 
-	const imageCount: number = MEDIA.filter((m) => m.type === "image").length;
-	const filmCount: number = MEDIA.filter((m) => m.type === "video").length;
+	const imageCount: number = MEDIA.filter((media: MediaItem) => media.type === "image").length;
+	const filmCount: number = MEDIA.filter((media: MediaItem) => media.type === "video").length;
 
 	return (
 		<section id="gallery" className="py-20 lg:py-32 bg-white">

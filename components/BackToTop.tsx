@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 
 export default function BackToTop() {
-	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
-	const [lightboxOpen, setLightboxOpen]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
+	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
+	const [lightboxOpen, setLightboxOpen]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 	useEffect(() => {
 		const onScroll: () => void = () => setVisible(window.scrollY > 600);

@@ -33,7 +33,7 @@ function getActiveSection(): string {
 }
 
 export default function ScrollProgressBar() {
-	const barRef = useRef<HTMLDivElement | null>(null);
+	const barReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
 	const [sectionLabel, setSectionLabel]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>("");
 
 	useEffect(() => {
@@ -47,8 +47,8 @@ export default function ScrollProgressBar() {
 			if (Math.abs(difference) < 0.02) {
 				current = target;
 
-				if (barRef.current)
-					barRef.current.style.width = `${current}%`;
+				if (barReference.current)
+					barReference.current.style.width = `${current}%`;
 
 				animationFrameId = null;
 
@@ -57,8 +57,8 @@ export default function ScrollProgressBar() {
 
 			current += difference * 0.18;
 
-			if (barRef.current)
-				barRef.current.style.width = `${current}%`;
+			if (barReference.current)
+				barReference.current.style.width = `${current}%`;
 
 			animationFrameId = requestAnimationFrame(update);
 		};
@@ -83,7 +83,7 @@ export default function ScrollProgressBar() {
 	return (
 		<div className="fixed top-0 left-0 right-0 z-[60] pointer-events-none">
 			<div
-				ref={barRef}
+				ref={barReference}
 				aria-hidden
 				className="h-[2px] bg-canal-green"
 				style={{ width: "0%" }}

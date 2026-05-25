@@ -89,8 +89,8 @@ export default function Testimonials() {
 
 	const reviewCount: number = reviews.length;
 
-	const stepDirection: (newIndex: number, direction: Direction) => void = useCallback((newIndex: number, dir: Direction) => {
-		setDirection(dir);
+	const stepDirection: (newIndex: number, direction: Direction) => void = useCallback((newIndex: number, direction: Direction) => {
+		setDirection(direction);
 		setActive(newIndex);
 		setTimerKey((k: number) => k + 1);
 	}, []);
@@ -98,7 +98,7 @@ export default function Testimonials() {
 	useEffect(() => {
 		const interval: NodeJS.Timeout = setInterval(() => {
 			setDirection("forward");
-			setActive((i) => (i + 1) % reviewCount);
+			setActive((index: number) => (index + 1) % reviewCount);
 		}, DISPLAY_DURATION);
 
 		return () => clearInterval(interval);

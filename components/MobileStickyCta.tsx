@@ -6,7 +6,7 @@ import { useTranslation, type Translations } from "@/lib/i18n";
 export default function MobileStickyCta() {
 	const { translations }: { translations: Translations } = useTranslation();
 
-	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
+	const [visible, setVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 	useEffect(() => {
 		const onScroll: () => void = () => setVisible(window.scrollY > 500);

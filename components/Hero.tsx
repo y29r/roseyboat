@@ -10,7 +10,7 @@ export default function Hero() {
 	const contentReference: React.RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
 	const videoReference: React.RefObject<HTMLVideoElement | null> = useRef<HTMLVideoElement>(null);
 
-	const [videoVisible, setVideoVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState(false);
+	const [videoVisible, setVideoVisible]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 	useEffect(() => {
 		const handleScroll: () => void = () => {
