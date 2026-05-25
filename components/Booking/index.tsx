@@ -5,10 +5,11 @@ import { useTranslation, type Translations } from "@/lib/i18n";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 
 const RATE_PER_NIGHT: number = 90;
-const MIN_NIGHTS: number = 3;
+const MIN_NIGHTS: number = 1;
 const MAX_NIGHTS: number = 28;
-const DISCOUNT_THRESHOLD: number = 5;
-const DISCOUNT: number = 0.15;
+const DISCOUNT_THRESHOLD: number = 7;
+const DISCOUNT: number = 0.21;
+const PET_FEE: number = 10;
 
 export type SpinDirection = "up" | "down";
 
@@ -17,6 +18,7 @@ export default function Booking() {
 
 	const [nights, setNights]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(MIN_NIGHTS);
 	const [spinDirection, setSpinDirection]: [SpinDirection, React.Dispatch<React.SetStateAction<SpinDirection>>] = useState<SpinDirection>("up");
+	const [withPet, setWithPet]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 	const hasDiscount: boolean = nights >= DISCOUNT_THRESHOLD;
 	const total: number = Math.round(RATE_PER_NIGHT * nights * (hasDiscount ? 1 - DISCOUNT : 1));
@@ -84,7 +86,7 @@ export default function Booking() {
 												key={nights}
 												className={`font-sans text-base font-medium text-dark text-center ${spinDirection === "up" ? "animate-spin-up" : "animate-spin-down"}`}
 											>
-												{nights} {translations.booking.nights}
+												{nights} {nights === 1 ? translations.booking.night : translations.booking.nights}
 											</span>
 										</div>
 
@@ -96,7 +98,7 @@ export default function Booking() {
 									</div>
 									<div className="text-center sm:text-right">
 										<p className="font-sans text-xs text-muted uppercase tracking-widest mb-0.5">{translations.booking.estimateLabel}</p>
-										<p className="font-serif text-4xl text-canal-green font-light">€{total.toLocaleString()}</p>
+										<p className="font-serif text-4xl text-canal-green font-light">€{(total + (withPet ? PET_FEE : 0)).toLocaleString()}</p>
 										<div
 											className={`overflow-hidden transition-all duration-300 ease-in-out ${hasDiscount ? "max-h-10 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
 										>
@@ -111,56 +113,71 @@ export default function Booking() {
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<div className="mb-6 pb-6 border-b border-beige/40">
-								<p className="font-sans text-xs text-muted uppercase tracking-widest mb-3">{translations.booking.includedHeading}</p>
-								<ul className="grid grid-cols-2 gap-x-4 gap-y-2">
-									{translations.booking.included.map((item: string) => (
-										<li key={item} className="flex items-center gap-2 font-sans text-sm text-dark">
-											<svg className="shrink-0 text-canal-green" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-												<path d="M2 7.5L5.5 11.5L12 2.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" strokeLinejoin="miter" />
-											</svg>
-											{item}
-										</li>
-									))}
-								</ul>
-							</div>
-
-							<div className="space-y-3 mb-8">
-								{[
-									{ label: translations.booking.minStay, value: translations.booking.minStayVal },
-									{ label: translations.booking.checkIn, value: translations.booking.checkInVal },
-									{ label: translations.booking.checkOut, value: translations.booking.checkOutVal },
-									{ label: translations.booking.capacity, value: translations.booking.capacityVal },
-								].map((item: { label: string; value: string }) => (
-									<div key={item.label} className="flex justify-between items-center py-2 border-b border-beige/40 last:border-0">
-										<span className="font-sans text-sm text-muted">{item.label}</span>
-										<span className="font-sans text-sm font-medium text-dark">{item.value}</span>
+								<label className="mt-4 flex items-start gap-2.5 cursor-pointer group">
+									<input
+										type="checkbox"
+										checked={withPet}
+										onChange={(e) => setWithPet(e.target.checked)}
+										className="mt-0.5 w-4 h-4 accent-canal-green cursor-pointer shrink-0"
+									/>
+									<div>
+										<span className="font-sans text-sm text-dark">
+											{translations.booking.petToggle}
+											<span className="font-medium text-canal-green ml-1.5">+€{PET_FEE}</span>
+										</span>
+										<p className="font-sans text-xs text-muted/70 mt-0.5 mb-4">{translations.booking.petNote}</p>
 									</div>
-								))}
+								</label>
+								<div className="mb-6 pb-6 border-b border-beige/40">
+									<p className="font-sans text-xs text-muted uppercase tracking-widest mb-3">{translations.booking.includedHeading}</p>
+									<ul className="grid grid-cols-2 gap-x-4 gap-y-2">
+										{translations.booking.included.map((item: string) => (
+											<li key={item} className="flex items-center gap-2 font-sans text-sm text-dark">
+												<svg className="shrink-0 text-canal-green" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+													<path d="M2 7.5L5.5 11.5L12 2.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" strokeLinejoin="miter" />
+												</svg>
+												{item}
+											</li>
+										))}
+									</ul>
+								</div>
+
+								<div className="space-y-3 mb-8">
+									{[
+										{ label: translations.booking.minStay, value: translations.booking.minStayVal },
+										{ label: translations.booking.checkIn, value: translations.booking.checkInVal },
+										{ label: translations.booking.checkOut, value: translations.booking.checkOutVal },
+										{ label: translations.booking.capacity, value: translations.booking.capacityVal },
+									].map((item: { label: string; value: string }) => (
+										<div key={item.label} className="flex justify-between items-center py-2 border-b border-beige/40 last:border-0">
+											<span className="font-sans text-sm text-muted">{item.label}</span>
+											<span className="font-sans text-sm font-medium text-dark">{item.value}</span>
+										</div>
+									))}
+								</div>
+
+								<a
+									href="https://www.airbnb.com"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="block w-full text-center bg-canal-green text-white font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 mb-3"
+								>
+									{translations.booking.airbnbBtn}
+								</a>
+
+								<a
+									href="mailto:contact@labarque.fr"
+									className="block w-full text-center bg-transparent text-canal-green border border-canal-green font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-canal-green/5 transition-all duration-300"
+								>
+									{translations.booking.inquiryBtn}
+								</a>
 							</div>
 
-							<a
-								href="https://www.airbnb.com"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="block w-full text-center bg-canal-green text-white font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 mb-3"
-							>
-								{translations.booking.airbnbBtn}
-							</a>
-
-							<a
-								href="mailto:contact@labarque.fr"
-								className="block w-full text-center bg-transparent text-canal-green border border-canal-green font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-canal-green/5 transition-all duration-300"
-							>
-								{translations.booking.inquiryBtn}
-							</a>
+							<p className="font-sans text-xs text-muted leading-relaxed px-1">
+								{translations.booking.calNote}
+							</p>
 						</div>
-
-						<p className="font-sans text-xs text-muted leading-relaxed px-1">
-							{translations.booking.calNote}
-						</p>
 					</div>
 				</div>
 			</div>

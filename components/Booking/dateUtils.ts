@@ -1,17 +1,22 @@
-"use strict";
+﻿"use strict";
 
-// Simulated booked date ranges (would come from iCal feed in production)
-export const BOOKED_RANGES: { start: Date; end: Date }[] = [
-	{ start: new Date(2026, 5, 6), end: new Date(2026, 5, 13) },
-	{ start: new Date(2026, 5, 20), end: new Date(2026, 5, 27) },
-	{ start: new Date(2026, 6, 4), end: new Date(2026, 6, 18) },
-	{ start: new Date(2026, 7, 1), end: new Date(2026, 7, 8) },
-];
+import type { BookedRange } from "@/app/api/availability/parseIcal";
 
-export function isBooked(date: Date): boolean {
-	return BOOKED_RANGES.some(
-		(range: { start: Date; end: Date }) => date >= range.start && date <= range.end
+function icalDateToDate(s: string): Date {
+	return new Date(
+		Number(s.slice(0, 4)),
+		Number(s.slice(4, 6)) - 1,
+		Number(s.slice(6, 8)),
 	);
+}
+
+export function isBooked(date: Date, ranges: BookedRange[]): boolean {
+	return ranges.some((range: BookedRange) => {
+		const start: Date = icalDateToDate(range.start);
+		const end: Date = icalDateToDate(range.end);
+
+		return date >= start && date < end;
+	});
 }
 
 export function isPast(date: Date): boolean {

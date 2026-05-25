@@ -54,6 +54,7 @@ export type Translations = {
 		bookHeading: string;
 		bookDesc: string;
 		perNight: string;
+		night: string;
 		nights: string;
 		estimateLabel: string;
 		discountLabel: string;
@@ -70,6 +71,8 @@ export type Translations = {
 		airbnbBtn: string;
 		inquiryBtn: string;
 		calNote: string;
+		petToggle: string;
+		petNote: string;
 		available: string;
 		booked: string;
 		months: string[];
@@ -197,9 +200,10 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose is listed on Airbnb for secure online booking and payment. Use the button below to check live availability and reserve your dates.",
 			perNight: "/ night",
+			night: "night",
 			nights: "nights",
 			estimateLabel: "Estimated total",
-			discountLabel: "15% off · 5+ nights",
+			discountLabel: "21% off · 7+ nights",
 			includedHeading: "What's included",
 			included: [
 				"Linen & towels",
@@ -209,9 +213,9 @@ const dictionary: Record<Language, Translations> = {
 				"All-season heating",
 			],
 			minStay: "Min. stay",
-			minStayVal: "3 nights",
+			minStayVal: "1 night",
 			checkIn: "Check-in",
-			checkInVal: "From 15:00",
+			checkInVal: "14:00 – 19:00",
 			checkOut: "Check-out",
 			checkOutVal: "Before 11:00",
 			capacity: "Capacity",
@@ -220,6 +224,8 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Send an Inquiry",
 			calNote:
 				"Calendar availability is updated regularly. For the most accurate dates, check the Airbnb listing directly.",
+			petToggle: "Bringing a pet?",
+			petNote: "Service animals are always free.",
 			available: "Available",
 			booked: "Booked",
 			months: [
@@ -234,29 +240,32 @@ const dictionary: Record<Language, Translations> = {
 			intro: "Everything needed for a comfortable few days on the water — nothing excessive, nothing missing.",
 			groups: [
 				{
-					label: "On board",
+					label: "Kitchen & dining",
 					items: [
-						{ label: "Heating", detail: "Diesel, all seasons" },
-						{ label: "Linen & towels", detail: "Provided for all guests" },
-						{ label: "Kitchen", detail: "Hob, oven & fridge" },
-						{ label: "Coffee & tea", detail: "French press, complimentary" },
-						{ label: "Snacks & drinks", detail: "Beers, water & something sweet" },
+						{ label: "Kitchenette", detail: "Gas cooker, fridge, freezer & kettle" },
+						{ label: "Tableware", detail: "Crockery, wine glasses & cooking basics" },
+						{ label: "Coffee & snacks", detail: "French press, beers & complimentary provisions" },
+						{ label: "Books", detail: "Reading material provided" },
 					],
 				},
 				{
-					label: "Access & logistics",
+					label: "Bedroom & bathroom",
 					items: [
+						{ label: "Linen & towels", detail: "Cotton, provided for all guests" },
+						{ label: "Bedroom", detail: "Room-darkening blinds, wardrobe & hangers" },
+						{ label: "Bathroom", detail: "Shower, shampoo, conditioner & shower gel" },
+						{ label: "Heating", detail: "Central heating, all seasons" },
+						{ label: "Safety", detail: "Smoke alarm, CO alarm, extinguisher & first aid kit" },
+					],
+				},
+				{
+					label: "On deck & access",
+					items: [
+						{ label: "Views", detail: "Canal & marina views from the deck" },
+						{ label: "Outdoor terrace", detail: "Furniture & canal-side dining area" },
 						{ label: "Parking", detail: "Free, short walk from the mooring" },
-						{ label: "Bike storage", detail: "Secure lock points on the towpath" },
-						{ label: "Pets", detail: "Well-behaved pets are welcome on board" },
-					],
-				},
-				{
-					label: "Stay details",
-					items: [
-						{ label: "Check-in", detail: "From 15:00 · self check-in by lockbox" },
-						{ label: "Check-out", detail: "Before 11:00" },
-						{ label: "Privacy", detail: "Entirely private — no shared spaces" },
+						{ label: "Pets", detail: "Well-behaved pets welcome on board" },
+						{ label: "Stay", detail: "Check-in 14:00–19:00 · Check-out before 11:00" },
 					],
 				},
 			],
@@ -268,7 +277,7 @@ const dictionary: Record<Language, Translations> = {
 					items: [
 						{ question: "How do I make a booking?", answer: "Via Airbnb for secure payment, or send a direct inquiry if you prefer." },
 						{ question: "How does check-in work?", answer: "Self check-in via a secure key lockbox — no waiting. Full instructions arrive with your booking confirmation." },
-						{ question: "What time is check-in and check-out?", answer: "Check-in from 15:00, check-out before 11:00." },
+						{ question: "What time is check-in and check-out?", answer: "Check-in from 14:00 to 19:00, check-out before 11:00." },
 						{ question: "How do I receive the exact location after booking?", answer: "The precise mooring location is shared by message after your booking is confirmed." },
 					],
 				},
@@ -283,9 +292,13 @@ const dictionary: Record<Language, Translations> = {
 				{
 					label: "Comfort & facilities",
 					items: [
-						{ question: "Is there heating on board?", answer: "Yes — diesel heating keeps the boat warm throughout the cooler months." },
-						{ question: "Is there a shower and what is it like?", answer: "Yes, a compact private shower and toilet are on board — clean, functional, and well-fitted." },
+						{ question: "Is there heating on board?", answer: "Yes — central heating keeps the boat warm throughout the cooler months." },
+						{ question: "Is there a shower and what is it like?", answer: "Yes, a compact private shower and toilet are on board — clean, functional, and well-fitted. Shampoo, conditioner and shower gel are provided." },
 						{ question: "Is there Wi-Fi available?", answer: "There is no dedicated Wi-Fi on board. Mobile data coverage in the area is generally good." },
+						{ question: "Is there a TV on board?", answer: "No TV. The boat is designed for quiet, unhurried time — books and reading material are provided for evenings on board." },
+						{ question: "Is there air conditioning?", answer: "No air conditioning, but the boat benefits from natural canal breezes in summer and has central heating for the cooler months." },
+						{ question: "Is there a washing machine or dryer?", answer: "There are no laundry facilities on board. The nearest options are in Capestang village." },
+						{ question: "Is there a full kitchen?", answer: "The boat has a kitchenette — gas cooker, fridge, freezer, kettle and cooking basics are all included. It is well-equipped for self-catering but not a full domestic kitchen." },
 					],
 				},
 				{
@@ -432,9 +445,10 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose est référencée sur Airbnb pour une réservation et un paiement sécurisés. Utilisez le bouton ci-dessous pour vérifier les disponibilités en temps réel.",
 			perNight: "/ nuit",
+			night: "nuit",
 			nights: "nuits",
 			estimateLabel: "Total estimé",
-			discountLabel: "−15 % dès 5 nuits",
+			discountLabel: "−21 % dès 7 nuits",
 			includedHeading: "Ce qui est inclus",
 			included: [
 				"Linge & serviettes",
@@ -444,9 +458,9 @@ const dictionary: Record<Language, Translations> = {
 				"Chauffage toutes saisons",
 			],
 			minStay: "Durée min.",
-			minStayVal: "3 nuits",
+			minStayVal: "1 nuit",
 			checkIn: "Arrivée",
-			checkInVal: "Dès 15h00",
+			checkInVal: "14h00 – 19h00",
 			checkOut: "Départ",
 			checkOutVal: "Avant 11h00",
 			capacity: "Capacité",
@@ -455,6 +469,8 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Envoyer une demande",
 			calNote:
 				"La disponibilité du calendrier est mise à jour régulièrement. Pour les dates les plus récentes, consultez directement l'annonce Airbnb.",
+			petToggle: "Vous voyagez avec un animal ?",
+			petNote: "Les animaux d'assistance sont toujours les bienvenus sans frais.",
 			available: "Disponible",
 			booked: "Réservé",
 			months: [
@@ -469,29 +485,32 @@ const dictionary: Record<Language, Translations> = {
 			intro: "Tout le nécessaire pour quelques jours tranquilles sur l'eau — rien d'excessif, rien de manquant.",
 			groups: [
 				{
-					label: "À bord",
+					label: "Cuisine & repas",
 					items: [
-						{ label: "Chauffage", detail: "Diesel, toutes saisons" },
-						{ label: "Linge & serviettes", detail: "Fournis pour tous les hôtes" },
-						{ label: "Cuisine", detail: "Plaques, four & réfrigérateur" },
-						{ label: "Café & thé", detail: "Cafetière à piston, offerts" },
-						{ label: "Snacks & boissons", detail: "Bières, eau & quelque chose de sucré" },
+						{ label: "Kitchenette", detail: "Gazinière, réfrigérateur, congélateur & bouilloire" },
+						{ label: "Vaisselle", detail: "Assiettes, verres à vin & ustensiles de cuisine" },
+						{ label: "Café & snacks", detail: "Cafetière à piston, bières & provisions offertes" },
+						{ label: "Lecture", detail: "Livres et magazines disponibles" },
 					],
 				},
 				{
-					label: "Accès & logistique",
+					label: "Chambre & salle de bain",
 					items: [
+						{ label: "Linge & serviettes", detail: "Coton, fournis pour tous les hôtes" },
+						{ label: "Chambre", detail: "Rideaux occultants, armoire & cintres" },
+						{ label: "Salle de bain", detail: "Douche, shampooing, après-shampooing & gel douche" },
+						{ label: "Chauffage", detail: "Chauffage central, toutes saisons" },
+						{ label: "Sécurité", detail: "Détecteur de fumée, CO, extincteur & trousse de secours" },
+					],
+				},
+				{
+					label: "Sur le pont & accès",
+					items: [
+						{ label: "Vue", detail: "Vue sur le canal et sur le port depuis le pont" },
+						{ label: "Terrasse extérieure", detail: "Mobilier & espace repas en bord de canal" },
 						{ label: "Parking", detail: "Gratuit, à quelques minutes de l'amarrage" },
-						{ label: "Rangement vélos", detail: "Points d'attache sécurisés sur le halage" },
 						{ label: "Animaux", detail: "Bienvenus à bord" },
-					],
-				},
-				{
-					label: "Informations séjour",
-					items: [
-						{ label: "Arrivée", detail: "Dès 15h00 · boîte à clés autonome" },
-						{ label: "Départ", detail: "Avant 11h00" },
-						{ label: "Intimité", detail: "Entièrement privatif — aucun espace partagé" },
+						{ label: "Séjour", detail: "Arrivée de 14h00 à 19h00 · Départ avant 11h00" },
 					],
 				},
 			],
@@ -503,7 +522,7 @@ const dictionary: Record<Language, Translations> = {
 					items: [
 						{ question: "Comment effectuer une réservation ?", answer: "Via Airbnb pour un paiement sécurisé, ou envoyez une demande directe si vous préférez." },
 						{ question: "Comment fonctionne l'arrivée ?", answer: "Accès autonome via une boîte à clés sécurisée — aucune attente. Les instructions complètes arrivent avec votre confirmation." },
-						{ question: "Quels sont les horaires d'arrivée et de départ ?", answer: "Arrivée dès 15h00, départ avant 11h00." },
+						{ question: "Quels sont les horaires d'arrivée et de départ ?", answer: "Arrivée de 14h00 à 19h00, départ avant 11h00." },
 						{ question: "Comment reçois-je l'adresse exacte après ma réservation ?", answer: "L'emplacement précis de l'amarrage est communiqué par message après confirmation de votre réservation." },
 					],
 				},
@@ -518,9 +537,13 @@ const dictionary: Record<Language, Translations> = {
 				{
 					label: "Confort & équipements",
 					items: [
-						{ question: "Y a-t-il un chauffage à bord ?", answer: "Oui — le chauffage diesel maintient le bateau au chaud pendant les mois plus frais." },
-						{ question: "Y a-t-il une douche et comment est-elle ?", answer: "Oui, une douche privée compacte et des toilettes sont à bord — propres, fonctionnelles et bien équipées." },
+						{ question: "Y a-t-il un chauffage à bord ?", answer: "Oui — le chauffage central maintient le bateau au chaud pendant les mois plus frais." },
+						{ question: "Y a-t-il une douche et comment est-elle ?", answer: "Oui, une douche privée compacte et des toilettes sont à bord — propres, fonctionnelles et bien équipées. Shampooing, après-shampooing et gel douche sont fournis." },
 						{ question: "Y a-t-il le Wi-Fi ?", answer: "Il n'y a pas de Wi-Fi dédié à bord. La couverture réseau mobile dans la zone est généralement bonne." },
+						{ question: "Y a-t-il une télévision à bord ?", answer: "Pas de télévision. Le bateau est conçu pour des moments calmes et déconnectés — des livres et de la lecture sont disponibles pour les soirées." },
+						{ question: "Y a-t-il la climatisation ?", answer: "Pas de climatisation, mais le bateau bénéficie des brises naturelles du canal en été et du chauffage central pour les mois plus frais." },
+						{ question: "Y a-t-il un lave-linge ou un sèche-linge ?", answer: "Il n'y a pas d'équipement de lavage à bord. Les solutions les plus proches se trouvent dans le village de Capestang." },
+						{ question: "Y a-t-il une cuisine complète ?", answer: "Le bateau dispose d'une kitchenette — gazinière, réfrigérateur, congélateur, bouilloire et ustensiles de base sont inclus. C'est bien équipé pour cuisiner, mais ce n'est pas une cuisine entièrement aménagée." },
 					],
 				},
 				{
@@ -667,9 +690,10 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose ist auf Airbnb gelistet für sichere Online-Buchung und Zahlung. Nutzen Sie den Button unten, um die aktuelle Verfügbarkeit zu prüfen und Ihre Termine zu reservieren.",
 			perNight: "/ Nacht",
+			night: "Nacht",
 			nights: "Nächte",
 			estimateLabel: "Geschätzter Gesamtpreis",
-			discountLabel: "15 % Rabatt ab 5 Nächten",
+			discountLabel: "21 % Rabatt ab 7 Nächten",
 			includedHeading: "Im Preis enthalten",
 			included: [
 				"Bettwäsche & Handtücher",
@@ -679,9 +703,9 @@ const dictionary: Record<Language, Translations> = {
 				"Ganzjährige Heizung",
 			],
 			minStay: "Mind. Aufenthalt",
-			minStayVal: "3 Nächte",
+			minStayVal: "1 Nacht",
 			checkIn: "Check-in",
-			checkInVal: "Ab 15:00 Uhr",
+			checkInVal: "14:00 – 19:00 Uhr",
 			checkOut: "Check-out",
 			checkOutVal: "Vor 11:00 Uhr",
 			capacity: "Kapazität",
@@ -690,6 +714,8 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Anfrage senden",
 			calNote:
 				"Die Kalenderverfügbarkeit wird regelmäßig aktualisiert. Für die aktuellsten Daten überprüfen Sie bitte direkt das Airbnb-Inserat.",
+			petToggle: "Mit einem Haustier unterwegs?",
+			petNote: "Assistenztiere sind stets kostenfrei.",
 			available: "Verfügbar",
 			booked: "Gebucht",
 			months: [
@@ -704,29 +730,32 @@ const dictionary: Record<Language, Translations> = {
 			intro: "Alles Notwendige für ein paar ruhige Tage auf dem Wasser — nichts Überflüssiges, nichts fehlt.",
 			groups: [
 				{
-					label: "An Bord",
+					label: "Küche & Essen",
 					items: [
-						{ label: "Heizung", detail: "Diesel, ganzjährig" },
-						{ label: "Bettwäsche & Handtücher", detail: "Für alle Gäste bereitgestellt" },
-						{ label: "Küche", detail: "Herd, Backofen & Kühlschrank" },
-						{ label: "Kaffee & Tee", detail: "French Press, kostenlos" },
-						{ label: "Snacks & Getränke", detail: "Biere, Wasser & etwas Süßes" },
+						{ label: "Küchenzeile", detail: "Gasherd, Kühlschrank, Tiefkühler & Wasserkocher" },
+						{ label: "Geschirr", detail: "Teller, Weinglas & Kochutensilien" },
+						{ label: "Kaffee & Snacks", detail: "French Press, Bier & Willkommensproviant" },
+						{ label: "Lektüre", detail: "Bücher und Lesematerial vorhanden" },
 					],
 				},
 				{
-					label: "Zugang & Logistik",
+					label: "Schlafzimmer & Bad",
 					items: [
+						{ label: "Bettwäsche & Handtücher", detail: "Baumwolle, für alle Gäste gestellt" },
+						{ label: "Schlafzimmer", detail: "Verdunkelungsrollos, Kleiderschrank & Bügel" },
+						{ label: "Badezimmer", detail: "Dusche, Shampoo, Spülung & Duschgel" },
+						{ label: "Heizung", detail: "Zentralheizung, ganzjährig" },
+						{ label: "Sicherheit", detail: "Rauchmelder, CO-Melder, Feuerlöscher & Erste-Hilfe-Set" },
+					],
+				},
+				{
+					label: "Deck & Zugang",
+					items: [
+						{ label: "Ausblick", detail: "Kanal- und Hafenblick vom Deck" },
+						{ label: "Außenterrasse", detail: "Möbel & Essbereich am Kanalufer" },
 						{ label: "Parkplatz", detail: "Kostenlos, kurzer Fußweg vom Liegeplatz" },
-						{ label: "Fahrradaufbewahrung", detail: "Sichere Schlösser am Leinpfad" },
 						{ label: "Haustiere", detail: "An Bord willkommen" },
-					],
-				},
-				{
-					label: "Aufenthaltsdetails",
-					items: [
-						{ label: "Check-in", detail: "Ab 15:00 Uhr · Selbst-Check-in per Schlüsselbox" },
-						{ label: "Check-out", detail: "Vor 11:00 Uhr" },
-						{ label: "Privatsphäre", detail: "Vollständig privat — keine geteilten Bereiche" },
+						{ label: "Aufenthalt", detail: "Check-in 14:00–19:00 · Check-out vor 11:00 Uhr" },
 					],
 				},
 			],
@@ -738,7 +767,7 @@ const dictionary: Record<Language, Translations> = {
 					items: [
 						{ question: "Wie kann ich buchen?", answer: "Über Airbnb für sichere Zahlung, oder senden Sie eine direkte Anfrage." },
 						{ question: "Wie funktioniert der Check-in?", answer: "Selbst-Check-in per Schlüsselbox — kein Warten. Vollständige Anweisungen werden mit Ihrer Buchungsbestätigung zugesandt." },
-						{ question: "Wann ist Check-in und Check-out?", answer: "Check-in ab 15:00 Uhr, Check-out vor 11:00 Uhr." },
+						{ question: "Wann ist Check-in und Check-out?", answer: "Check-in 14:00–19:00 Uhr, Check-out vor 11:00 Uhr." },
 						{ question: "Wie erhalte ich nach der Buchung den genauen Standort?", answer: "Der genaue Liegeplatz wird nach Buchungsbestätigung per Nachricht mitgeteilt." },
 					],
 				},
@@ -753,9 +782,13 @@ const dictionary: Record<Language, Translations> = {
 				{
 					label: "Komfort & Ausstattung",
 					items: [
-						{ question: "Gibt es Heizung an Bord?", answer: "Ja — eine Diesel-Heizung hält das Boot in den kühleren Monaten warm." },
-						{ question: "Gibt es eine Dusche und wie ist sie?", answer: "Ja, eine kompakte private Dusche und Toilette sind an Bord — sauber, funktional und gut ausgestattet." },
+						{ question: "Gibt es Heizung an Bord?", answer: "Ja — die Zentralheizung hält das Boot in den kühleren Monaten warm." },
+						{ question: "Gibt es eine Dusche und wie ist sie?", answer: "Ja, eine kompakte private Dusche und Toilette sind an Bord — sauber, funktional und gut ausgestattet. Shampoo, Spülung und Duschgel werden bereitgestellt." },
 						{ question: "Gibt es WLAN an Bord?", answer: "Es gibt kein dediziertes WLAN an Bord. Die mobile Datenverbindung in der Gegend ist im Allgemeinen gut." },
+						{ question: "Gibt es einen Fernseher an Bord?", answer: "Kein Fernseher. Das Boot ist für ruhige, entschleunigte Zeit gedacht — Bücher und Lesematerial stehen für die Abende bereit." },
+						{ question: "Gibt es eine Klimaanlage?", answer: "Keine Klimaanlage, aber das Boot profitiert im Sommer von natürlichen Kanalbriesen und hat für kühlere Monate eine Zentralheizung." },
+						{ question: "Gibt es eine Waschmaschine oder einen Trockner?", answer: "Keine Wäschepflegeeinrichtungen an Bord. Die nächsten Möglichkeiten befinden sich im Dorf Capestang." },
+						{ question: "Gibt es eine vollständige Küche?", answer: "Das Boot verfügt über eine Küchenzeile — Gasherd, Kühlschrank, Tiefkühler, Wasserkocher und Kochgrundausstattung sind vorhanden. Es ist gut genüg für Selbstverpflegung, aber keine vollständig ausgestattete Küche." },
 					],
 				},
 				{
@@ -902,9 +935,10 @@ const dictionary: Record<Language, Translations> = {
 			bookDesc:
 				"La Vie En Rose staat op Airbnb voor veilig online boeken en betalen. Gebruik de knop hieronder om de actuele beschikbaarheid te controleren en uw datums te reserveren.",
 			perNight: "/ nacht",
+			night: "nacht",
 			nights: "nachten",
 			estimateLabel: "Geschatte totaalprijs",
-			discountLabel: "15% korting bij 5+ nachten",
+			discountLabel: "21% korting bij 7+ nachten",
 			includedHeading: "Wat is inbegrepen",
 			included: [
 				"Linnengoed & handdoeken",
@@ -914,9 +948,9 @@ const dictionary: Record<Language, Translations> = {
 				"Verwarming het hele jaar",
 			],
 			minStay: "Min. verblijf",
-			minStayVal: "3 nachten",
+			minStayVal: "1 nacht",
 			checkIn: "Inchecken",
-			checkInVal: "Vanaf 15:00",
+			checkInVal: "14:00 – 19:00",
 			checkOut: "Uitchecken",
 			checkOutVal: "Vóór 11:00",
 			capacity: "Capaciteit",
@@ -925,6 +959,8 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Stuur een aanvraag",
 			calNote:
 				"De kalender wordt regelmatig bijgewerkt. Controleer de Airbnb-advertentie voor de meest actuele datums.",
+			petToggle: "Reist u met een huisdier?",
+			petNote: "Assistentiedieren zijn altijd gratis welkom.",
 			available: "Beschikbaar",
 			booked: "Geboekt",
 			months: [
@@ -939,29 +975,32 @@ const dictionary: Record<Language, Translations> = {
 			intro: "Alles wat nodig is voor een rustige paar dagen op het water — niets overbodig, niets mist.",
 			groups: [
 				{
-					label: "Aan boord",
+					label: "Keuken & eten",
 					items: [
-						{ label: "Verwarming", detail: "Diesel, het hele jaar" },
-						{ label: "Beddengoed & handdoeken", detail: "Verzorgd voor alle gasten" },
-						{ label: "Keuken", detail: "Kookplaat, oven & koelkast" },
-						{ label: "Koffie & thee", detail: "French press, gratis" },
-						{ label: "Snacks & dranken", detail: "Bieren, water & iets zoets" },
+						{ label: "Kitchenette", detail: "Gaskomfoor, koelkast, vriezer & waterkoker" },
+						{ label: "Servies", detail: "Borden, wijnglazen & kookgerei" },
+						{ label: "Koffie & snacks", detail: "French press, bieren & welkomstproviand" },
+						{ label: "Leesmateriaal", detail: "Boeken en tijdschriften aanwezig" },
 					],
 				},
 				{
-					label: "Toegang & logistiek",
+					label: "Slaapkamer & badkamer",
 					items: [
+						{ label: "Beddengoed & handdoeken", detail: "Katoen, verzorgd voor alle gasten" },
+						{ label: "Slaapkamer", detail: "Verduisteringsgordijnen, kledingkast & hangers" },
+						{ label: "Badkamer", detail: "Douche, shampoo, conditioner & douchegel" },
+						{ label: "Verwarming", detail: "Centrale verwarming, het hele jaar" },
+						{ label: "Veiligheid", detail: "Rookmelder, CO-melder, brandblusser & EHBO-kit" },
+					],
+				},
+				{
+					label: "Dek & toegang",
+					items: [
+						{ label: "Uitzicht", detail: "Kanaal- en havenzicht vanaf het dek" },
+						{ label: "Buitenterras", detail: "Meubels & eetruimte aan het kanaal" },
 						{ label: "Parkeren", detail: "Gratis, op loopafstand van de aanlegplaats" },
-						{ label: "Fietsopslag", detail: "Veilige slotpunten op het jaagpad" },
 						{ label: "Huisdieren", detail: "Welkom aan boord" },
-					],
-				},
-				{
-					label: "Verblijfsdetails",
-					items: [
-						{ label: "Inchecken", detail: "Vanaf 15:00 · zelf inchecken via sleutelkluis" },
-						{ label: "Uitchecken", detail: "Vóór 11:00" },
-						{ label: "Privacy", detail: "Volledig privé — geen gedeelde ruimtes" },
+						{ label: "Verblijf", detail: "Inchecken 14:00–19:00 · Uitchecken vóór 11:00" },
 					],
 				},
 			],
@@ -973,7 +1012,7 @@ const dictionary: Record<Language, Translations> = {
 					items: [
 						{ question: "Hoe maak ik een reservering?", answer: "Via Airbnb voor veilig betalen, of stuur een directe aanvraag als u dat prefereert." },
 						{ question: "Hoe verloopt het inchecken?", answer: "Zelf inchecken via een beveiligde sleutelkluis — geen wachten. Volledige instructies volgen met uw boekingsbevestiging." },
-						{ question: "Wat zijn de check-in en check-out tijden?", answer: "Check-in vanaf 15:00 uur, check-out vóór 11:00 uur." },
+						{ question: "Wat zijn de check-in en check-out tijden?", answer: "Check-in 14:00–19:00 uur, check-out vóór 11:00 uur." },
 						{ question: "Hoe ontvang ik de exacte locatie na boeking?", answer: "De precieze aanlegplaats wordt na bevestiging van uw boeking per bericht gedeeld." },
 					],
 				},
@@ -988,9 +1027,13 @@ const dictionary: Record<Language, Translations> = {
 				{
 					label: "Comfort & faciliteiten",
 					items: [
-						{ question: "Is er verwarming aan boord?", answer: "Ja — dieselverwarming houdt de boot warm tijdens de koelere maanden." },
-						{ question: "Is er een douche en hoe is die?", answer: "Ja, een compacte privédouche en toilet zijn aan boord — schoon, functioneel en goed uitgerust." },
+						{ question: "Is er verwarming aan boord?", answer: "Ja — centrale verwarming houdt de boot warm tijdens de koelere maanden." },
+						{ question: "Is er een douche en hoe is die?", answer: "Ja, een compacte privédouche en toilet zijn aan boord — schoon, functioneel en goed uitgerust. Shampoo, conditioner en douchegel zijn aanwezig." },
 						{ question: "Is er Wi-Fi beschikbaar?", answer: "Er is geen eigen Wi-Fi aan boord. Mobiele data-dekking in het gebied is over het algemeen goed." },
+						{ question: "Is er een televisie aan boord?", answer: "Geen televisie. De boot is ontworpen voor rustige, onthaaste tijd — boeken en leesmateriaal zijn beschikbaar voor de avonden." },
+						{ question: "Is er airconditioning?", answer: "Geen airconditioning, maar de boot profiteert van natuurlijke kanaalbriesjes in de zomer en heeft centrale verwarming voor de koelere maanden." },
+						{ question: "Is er een wasmachine of droger?", answer: "Er zijn geen wasvoorzieningen aan boord. De dichtstbijzijnde opties bevinden zich in het dorp Capestang." },
+						{ question: "Is er een volledige keuken?", answer: "De boot heeft een kitchenette — gaskomfoor, koelkast, vriezer, waterkoker en kookbasisbenodigdheden zijn aanwezig. Goed genoeg voor zelfverzorging, maar geen volledig uitgeruste keuken." },
 					],
 				},
 				{

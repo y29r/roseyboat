@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation, type Translations } from "@/lib/i18n";
@@ -11,66 +11,200 @@ type Review = {
 	country: string;
 	code: string;
 	rating: number;
+	date: string;
+	stayDuration: string;
 };
 
-const DISPLAY_DURATION: number = 6500;
+const DISPLAY_DURATION: number = 7500;
 
 const reviews: Review[] = [
 	{
-		quote:
-			"Waking up to water and birdsong every morning. The canal at dawn is something I'll never forget.",
-		name: "Sophie",
-		country: "Netherlands",
-		code: "NL",
-		rating: 5,
-	},
-	{
-		quote:
-			"Perfectly clean, beautifully restored. The kitchen had everything and the beds were incredibly comfortable.",
-		name: "James",
-		country: "United Kingdom",
-		code: "GB",
-		rating: 5,
-	},
-	{
-		quote:
-			"We cycled to three villages and a medieval citadel. Having the boat as a base made it feel like a real adventure.",
-		name: "Lena",
-		country: "Germany",
-		code: "DE",
-		rating: 5,
-	},
-	{
-		quote:
-			"Quiet, honest, and utterly peaceful. Nothing pretentious — just a beautiful place on a beautiful waterway.",
-		name: "Thomas",
+		quote: "A lovely time on the canal with a warm jazz atmosphere. We completely disconnected from everyday life.",
+		name: "Valérie",
 		country: "France",
 		code: "FR",
 		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
 	},
 	{
-		quote:
-			"The host was wonderfully helpful with cycling routes. The towpath access is just incredible.",
-		name: "Camille",
-		country: "Canada",
-		code: "CA",
+		quote: "What an extraordinary experience that was! Memories forever!",
+		name: "Jane",
+		country: "United States",
+		code: "US",
 		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
 	},
 	{
-		quote:
-			"We came for three nights and wished we'd booked a week. The sunsets from the deck were worth the trip alone.",
-		name: "Erik",
-		country: "Sweden",
-		code: "SE",
+		quote: "We felt really good here and enjoyed a lot of peace and quiet. The village centre is just a short walk away — very convenient for restaurants in the evening.",
+		name: "Maëlle",
+		country: "France",
+		code: "FR",
 		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A musical treat after a lovely day cycling along the Canal! It makes you want to stay.",
+		name: "Remi Benjamin",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "Clean, welcoming, and peaceful — Joji and Barbara always responsive. The unobstructed view of the Canal is what makes this place unforgettable.",
+		name: "Marie",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "First time on a houseboat and we loved it! Perfectly located for cycling along the canal. Special mention for the little terrace.",
+		name: "Marjorie",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "The music creates a lovely atmosphere and the terrace is perfect for an evening aperitif. A true little haven of peace.",
+		name: "Romain",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "May 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A lovely, peaceful floating getaway on Rosy Boat. Looking forward to coming back — thank you to our hosts!",
+		name: "Perrine",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "April 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A wonderful time at La Vie en Rose — peaceful and serene. A huge thank you to our hosts for their wonderful care.",
+		name: "Delphine",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "April 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A wonderful experience on this houseboat — the boat is very pleasant, as is the surrounding area.",
+		name: "Malek",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "April 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A truly enchanting stay on the Canal du Midi. Attentive hosts, charming setting — we were captivated from start to finish.",
+		name: "Mathis",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "April 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "Joji and Barbara went above and beyond, anticipating every need. The boat is unique, full of character, and extremely comfortable.",
+		name: "Florence",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "March 2026",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "We chose this for New Year's Eve and loved it — a small heating issue was quickly resolved, and everything else was perfect. Welcoming hosts.",
+		name: "Christelle",
+		country: "France",
+		code: "FR",
+		rating: 4,
+		date: "January 2026",
+		stayDuration: "Stayed a few nights",
+	},
+	{
+		quote: "An experience — welcoming hosts and wonderfully cozy. Cool and calm on the canal at night. We didn't want to leave at checkout.",
+		name: "Karin",
+		country: "Germany",
+		code: "DE",
+		rating: 4,
+		date: "October 2025",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "The place is beautiful — you can sense the love for it everywhere. The hosts are so friendly and responsive. We really recommend it!",
+		name: "Cécile",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "September 2025",
+		stayDuration: "Stayed a few nights",
+	},
+	{
+		quote: "A fun experience — the barge was impeccable. Not big but very cozy, with thoughtful attention from the hosts on arrival.",
+		name: "Xavier",
+		country: "France",
+		code: "FR",
+		rating: 4,
+		date: "September 2025",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "Such an amazing place! The houseboat was lovely and the hosts were hospitable, generous and kind. We really enjoyed this experience!",
+		name: "Danica",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "August 2025",
+		stayDuration: "Family trip",
+	},
+	{
+		quote: "Very pleasant stay on this charming houseboat — quiet, relaxing and truly atypical. Clean, comfortable, and we loved being greeted with music.",
+		name: "Amandine",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "August 2025",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A boat with such charm it gives wings to the imagination — children and adults alike love it. Absolute cleanliness and wonderful taste.",
+		name: "Joannes",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "August 2025",
+		stayDuration: "Stayed one night",
+	},
+	{
+		quote: "A wonderful discovery of life on the Canal du Midi. Welcomed with snacks and music — the barge is superb.",
+		name: "Charline",
+		country: "France",
+		code: "FR",
+		rating: 5,
+		date: "August 2025",
+		stayDuration: "Stayed one night",
 	},
 ];
 
 function Stars({ count }: { count: number }) {
 	return (
 		<div className="flex gap-1">
-			{Array.from({ length: count }).map((_, i) => (
-				<svg key={i} className="w-4 h-4 text-canal-green" viewBox="0 0 20 20" fill="currentColor">
+			{Array.from({ length: 5 }).map((_, i) => (
+				<svg key={i} className={`w-4 h-4 ${i < count ? "text-canal-green" : "text-canal-green/25"}`} viewBox="0 0 20 20" fill="currentColor">
 					<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
 				</svg>
 			))}
@@ -136,7 +270,7 @@ export default function Testimonials() {
 					<div className="flex items-center gap-3">
 						<Stars count={5} />
 						<span className="font-sans text-sm text-muted">
-							<strong className="text-dark">4.97</strong> {translations.testimonials.ratingText}
+							<strong className="text-dark">4.78</strong> {translations.testimonials.ratingText}
 						</span>
 					</div>
 				</div>
@@ -162,7 +296,7 @@ export default function Testimonials() {
 
 						<blockquote
 							key={active}
-							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance min-h-[7rem] sm:min-h-[8.5rem] lg:min-h-[9.5rem] ${animationClass}`}
+							className={`font-serif text-dark text-2xl sm:text-3xl lg:text-[2.1rem] font-light leading-[1.5] text-balance h-[10rem] sm:h-[10rem] lg:h-[11rem] overflow-hidden ${animationClass}`}
 						>
 							&ldquo;{reviews[active].quote}&rdquo;
 						</blockquote>
@@ -188,8 +322,10 @@ export default function Testimonials() {
 								/>
 								{reviews[active].country}
 							</p>
+							<p className="font-sans text-xs text-muted/60 mt-1 tracking-wide normal-case">
+								{reviews[active].date} · {reviews[active].stayDuration}
+							</p>
 						</div>
-
 						<div
 							className="review-progress-bar mt-1 w-[4rem] h-[2px] bg-beige/60 overflow-hidden rounded-full"
 							aria-hidden
@@ -217,7 +353,11 @@ export default function Testimonials() {
 						</svg>
 					</button>
 
-					<div className="flex items-center gap-2.5" role="tablist">
+					<span className="sm:hidden font-sans text-xs text-muted tabular-nums min-w-[3rem] text-center">
+						{active + 1} / {reviewCount}
+					</span>
+
+					<div className="hidden sm:flex items-center gap-2.5" role="tablist">
 						{reviews.map((_: any, index: number) => (
 							<button
 								key={index}
@@ -242,6 +382,20 @@ export default function Testimonials() {
 							<path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
 						</svg>
 					</button>
+				</div>
+
+				<div className="flex justify-center mt-10">
+					<a
+						href="https://www.airbnb.co.uk/rooms/50820308#reviews"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-2 font-sans text-sm text-muted border border-beige rounded-full px-5 py-2.5 hover:border-canal-green hover:text-canal-green transition-all duration-300"
+					>
+						<svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+							<path strokeLinecap="round" strokeLinejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6m0 0v6m0-6L10 14" />
+						</svg>
+						Read all reviews on Airbnb
+					</a>
 				</div>
 
 				<div className="mt-14 pt-10 border-t border-beige/60 grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-10">

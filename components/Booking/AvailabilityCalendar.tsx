@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation, type Translations } from "@/lib/i18n";
 import { isBooked, isPast, getDaysInMonth } from "./dateUtils";
+import type { BookedRange } from "@/app/api/availability/parseIcal";
 
 export default function AvailabilityCalendar() {
 	const { translations }: { translations: Translations } = useTranslation();
@@ -11,8 +12,33 @@ export default function AvailabilityCalendar() {
 
 	const [viewYear, setViewYear]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(today.getFullYear());
 	const [viewMonth, setViewMonth]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(today.getMonth());
-
 	const [calendarDirection, setCalendarDirection]: ["forward" | "backward" | null, React.Dispatch<React.SetStateAction<"forward" | "backward" | null>>] = useState<"forward" | "backward" | null>(null);
+	const [ranges, setRanges]: [BookedRange[], React.Dispatch<React.SetStateAction<BookedRange[]>>] = useState<BookedRange[]>([]);
+	const [loading, setLoading]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(true);
+	const [fetchedAt, setFetchedAt]: [string | null, React.Dispatch<React.SetStateAction<string | null>>] = useState<string | null>(null);
+
+	useEffect(() => {
+		const basePath: string = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+		fetch(`${basePath}/availability.json`)
+			.then((r) => r.json())
+			.then((data: { ranges: BookedRange[]; fetchedAt?: string }) => {
+				setRanges(data.ranges ?? []);
+				setFetchedAt(data.fetchedAt ?? null);
+			})
+			.catch(() => setRanges([]))
+			.finally(() => setLoading(false));
+	}, []);
+
+	const relativeTime = (iso: string): string => {
+		const difference: number = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+
+		if (difference < 60) return "just now";
+		if (difference < 3600) return `${Math.floor(difference / 60)} minutes ago`;
+		if (difference < 7200) return "1 hour ago";
+
+		return `${Math.floor(difference / 3600)} hours ago`;
+	};
 
 	const cells: (Date | null)[] = getDaysInMonth(viewYear, viewMonth);
 	const isCurrentMonth: boolean = viewYear === today.getFullYear() && viewMonth === today.getMonth();
@@ -85,8 +111,8 @@ export default function AvailabilityCalendar() {
 					if (!date)
 						return <div key={`empty-${index}`} />;
 
-					const booked: boolean = isBooked(date);
 					const past: boolean = isPast(date);
+					const booked: boolean = !loading && isBooked(date, ranges);
 
 					return (
 						<div
@@ -94,11 +120,13 @@ export default function AvailabilityCalendar() {
 							className={`
 								aspect-square flex items-center justify-center rounded-lg text-sm font-sans
 								font-medium mx-0.5 transition-colors duration-150
-								${past
-									? "text-beige cursor-default"
-									: booked
-										? "bg-beige/60 text-muted/60 cursor-not-allowed line-through"
-										: "bg-canal-green/10 text-canal-green hover:bg-canal-green/20 cursor-pointer font-semibold"
+								${loading
+									? "text-muted/40 cursor-default"
+									: past
+										? "text-beige cursor-default"
+										: booked
+											? "bg-beige/60 text-muted/60 cursor-not-allowed line-through"
+											: "bg-canal-green/10 text-canal-green hover:bg-canal-green/20 cursor-pointer font-semibold"
 								}
 							`}
 						>
@@ -119,6 +147,12 @@ export default function AvailabilityCalendar() {
 					{translations.booking.booked}
 				</span>
 			</div>
+
+			{!loading && fetchedAt && (
+				<p className="mt-3 text-xs font-sans text-muted/60">
+					Availability updated {relativeTime(fetchedAt)}
+				</p>
+			)}
 		</div>
 	);
 }
