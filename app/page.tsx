@@ -12,24 +12,27 @@ import Footer from "@/components/Footer";
 import MobileStickyCta from "@/components/MobileStickyCta";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import BackToTop from "@/components/BackToTop";
+import { StrictMode } from "react";
 
 export default function Home() {
 	return (
-		<main>
-			<ScrollProgressBar />
-			<Navbar />
-			<Hero />
-			<Features />
-			<Experience />
-			<Gallery />
-			<Booking />
-			<Amenities />
-			<Location />
-			<Testimonials />
-			<CtaSection />
-			<Footer />
-			<MobileStickyCta />
-			<BackToTop />
-		</main>
+		<StrictMode>
+			<main>
+				<ScrollProgressBar />
+				<Navbar />
+				<Hero />
+				<Features />
+				<Experience />
+				<Gallery />
+				<Booking />
+				<Amenities />
+				<Location />
+				<Testimonials />
+				<CtaSection />
+				<Footer />
+				<MobileStickyCta />
+				<BackToTop />
+			</main>
+		</StrictMode>
 	);
 }

@@ -408,7 +408,7 @@ export default function Gallery() {
 							key={item.id}
 							currentMediaItem={item}
 							listIndex={index}
-							onOpen={(index, play) => setLightbox({ index: index, play })}
+							onOpen={(index: number, play: boolean) => setLightbox({ index: index, play })}
 						/>
 					))}
 				</div>

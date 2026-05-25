@@ -26,6 +26,8 @@ const config: Config = {
 				"fade-up": "fadeUp 0.8s ease-out forwards",
 				"slide-in-left": "slideInLeft 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards",
 				"slide-in-right": "slideInRight 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+				"spin-up": "spinUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+				"spin-down": "spinDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards",
 			},
 			keyframes: {
 				fadeIn: {
@@ -43,6 +45,14 @@ const config: Config = {
 				slideInRight: {
 					"0%": { opacity: "0", transform: "translateX(22px)" },
 					"100%": { opacity: "1", transform: "translateX(0)" },
+				},
+				spinUp: {
+					"0%": { opacity: "0", transform: "translateY(70%)" },
+					"100%": { opacity: "1", transform: "translateY(0)" },
+				},
+				spinDown: {
+					"0%": { opacity: "0", transform: "translateY(-70%)" },
+					"100%": { opacity: "1", transform: "translateY(0)" },
 				},
 			},
 		},

@@ -5,23 +5,23 @@ import SmoothScroll from "@/components/SmoothScroll";
 import CookieBanner from "@/components/CookieBanner";
 import { I18nProvider } from "@/lib/i18n";
 
-const cormorant = Cormorant_Garamond({
+const cormorant: any = Cormorant_Garamond({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "600", "700"],
 	variable: "--font-cormorant",
 	display: "swap",
 });
 
-const manrope = Manrope({
+const manrope: any = Manrope({
 	subsets: ["latin"],
 	weight: ["300", "400", "500", "600", "700"],
 	variable: "--font-manrope",
 	display: "swap",
 });
 
-const SITE_URL = "https://y29r.github.io/roseyboat";
+const SITE_URL: string = "https://y29r.github.io/roseyboat";
 
-const jsonLd = {
+const jsonLd: any = {
 	"@context": "https://schema.org",
 	"@type": "LodgingBusiness",
 	name: "La Vie En Rose",
