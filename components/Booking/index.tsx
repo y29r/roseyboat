@@ -158,7 +158,7 @@ export default function Booking() {
 								</div>
 
 								<a
-									href="https://www.airbnb.com"
+									href="http://airbnb.com/h/rosyboat"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="block w-full text-center bg-canal-green text-white font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 mb-3"
@@ -167,7 +167,7 @@ export default function Booking() {
 								</a>
 
 								<a
-									href="mailto:contact@labarque.fr"
+									href="mailto:bookrosyboat@gmail.com"
 									className="block w-full text-center bg-transparent text-canal-green border border-canal-green font-sans font-semibold text-sm tracking-wide py-4 rounded-full hover:bg-canal-green/5 transition-all duration-300"
 								>
 									{translations.booking.inquiryBtn}

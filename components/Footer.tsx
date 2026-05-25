@@ -22,10 +22,10 @@ export default function Footer() {
 						<ul className="space-y-2 font-sans text-sm">
 							<li>
 								<a
-									href="mailto:contact@labarque.fr"
+									href="mailto:bookrosyboat@gmail.com"
 									className="hover:text-white transition-colors duration-200"
 								>
-									contact@labarque.fr
+									bookrosyboat@gmail.com
 								</a>
 							</li>
 
