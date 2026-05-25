@@ -1,6 +1,9 @@
 ﻿"use strict";
 
-import type { BookedRange } from "@/app/api/availability/parseIcal";
+export interface BookedRange {
+	start: string;
+	end: string;
+}
 
 function icalDateToDate(s: string): Date {
 	return new Date(

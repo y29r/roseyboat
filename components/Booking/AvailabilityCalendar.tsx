@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation, type Translations } from "@/lib/i18n";
 import { isBooked, isPast, getDaysInMonth } from "./dateUtils";
-import type { BookedRange } from "@/app/api/availability/parseIcal";
+import type { BookedRange } from "./dateUtils";
 
 export default function AvailabilityCalendar() {
 	const { translations }: { translations: Translations } = useTranslation();
