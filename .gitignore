@@ -16,6 +16,5 @@ build/
 npm-debug.log*
 tsconfig.tsbuildinfo
 content/
-scripts/
 
 public/availability.json
