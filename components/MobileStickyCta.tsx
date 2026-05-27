@@ -28,7 +28,7 @@ export default function MobileStickyCta() {
 					{translations.mobile.checkAvailability}
 				</a>
 				<a
-					href="mailto:contact@labarque.fr"
+					href="mailto:bookrosyboat@gmail.com"
 					className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-cream border border-beige rounded-full hover:bg-beige transition-colors"
 					aria-label="Send email inquiry"
 				>

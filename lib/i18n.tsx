@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, {
 	createContext,
@@ -71,8 +71,6 @@ export type Translations = {
 		airbnbBtn: string;
 		inquiryBtn: string;
 		calNote: string;
-		petToggle: string;
-		petNote: string;
 		available: string;
 		booked: string;
 		months: string[];
@@ -209,7 +207,6 @@ const dictionary: Record<Language, Translations> = {
 				"Linen & towels",
 				"Self check-in",
 				"Up to 4 guests",
-				"Pets welcome",
 				"All-season heating",
 			],
 			minStay: "Min. stay",
@@ -224,8 +221,6 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Send an Inquiry",
 			calNote:
 				"Calendar availability is updated regularly. For the most accurate dates, check the Airbnb listing directly.",
-			petToggle: "Bringing a pet?",
-			petNote: "Service animals are always free.",
 			available: "Available",
 			booked: "Booked",
 			months: [
@@ -264,7 +259,6 @@ const dictionary: Record<Language, Translations> = {
 						{ label: "Views", detail: "Canal & marina views from the deck" },
 						{ label: "Outdoor terrace", detail: "Furniture & canal-side dining area" },
 						{ label: "Parking", detail: "Free, short walk from the mooring" },
-						{ label: "Pets", detail: "Well-behaved pets welcome on board" },
 						{ label: "Stay", detail: "Check-in 14:00–19:00 · Check-out before 11:00" },
 					],
 				},
@@ -305,7 +299,6 @@ const dictionary: Record<Language, Translations> = {
 					label: "Access & logistics",
 					items: [
 						{ question: "Is parking really free and how far is it from the boat?", answer: "Yes, free — a short walk, typically 3–5 minutes from the mooring." },
-						{ question: "Are pets allowed on board?", answer: "Well-behaved pets are welcome. The towpath is ideal for morning walks." },
 					],
 				},
 				{
@@ -454,7 +447,6 @@ const dictionary: Record<Language, Translations> = {
 				"Linge & serviettes",
 				"Arrivée autonome",
 				"Jusqu'à 4 personnes",
-				"Animaux bienvenus",
 				"Chauffage toutes saisons",
 			],
 			minStay: "Durée min.",
@@ -469,8 +461,6 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Envoyer une demande",
 			calNote:
 				"La disponibilité du calendrier est mise à jour régulièrement. Pour les dates les plus récentes, consultez directement l'annonce Airbnb.",
-			petToggle: "Vous voyagez avec un animal ?",
-			petNote: "Les animaux d'assistance sont toujours les bienvenus sans frais.",
 			available: "Disponible",
 			booked: "Réservé",
 			months: [
@@ -509,7 +499,6 @@ const dictionary: Record<Language, Translations> = {
 						{ label: "Vue", detail: "Vue sur le canal et sur le port depuis le pont" },
 						{ label: "Terrasse extérieure", detail: "Mobilier & espace repas en bord de canal" },
 						{ label: "Parking", detail: "Gratuit, à quelques minutes de l'amarrage" },
-						{ label: "Animaux", detail: "Bienvenus à bord" },
 						{ label: "Séjour", detail: "Arrivée de 14h00 à 19h00 · Départ avant 11h00" },
 					],
 				},
@@ -550,7 +539,6 @@ const dictionary: Record<Language, Translations> = {
 					label: "Accès & logistique",
 					items: [
 						{ question: "Le parking est-il vraiment gratuit et à quelle distance du bateau ?", answer: "Oui, gratuit — à quelques minutes à pied, généralement 3 à 5 minutes de l'amarrage." },
-						{ question: "Les animaux sont-ils acceptés ?", answer: "Les animaux bien tenus sont les bienvenus. Le chemin de halage est idéal pour les promenades matinales." },
 					],
 				},
 				{
@@ -699,7 +687,6 @@ const dictionary: Record<Language, Translations> = {
 				"Bettwäsche & Handtücher",
 				"Self-Check-in",
 				"Bis zu 4 Gäste",
-				"Haustiere willkommen",
 				"Ganzjährige Heizung",
 			],
 			minStay: "Mind. Aufenthalt",
@@ -714,8 +701,6 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Anfrage senden",
 			calNote:
 				"Die Kalenderverfügbarkeit wird regelmäßig aktualisiert. Für die aktuellsten Daten überprüfen Sie bitte direkt das Airbnb-Inserat.",
-			petToggle: "Mit einem Haustier unterwegs?",
-			petNote: "Assistenztiere sind stets kostenfrei.",
 			available: "Verfügbar",
 			booked: "Gebucht",
 			months: [
@@ -754,7 +739,6 @@ const dictionary: Record<Language, Translations> = {
 						{ label: "Ausblick", detail: "Kanal- und Hafenblick vom Deck" },
 						{ label: "Außenterrasse", detail: "Möbel & Essbereich am Kanalufer" },
 						{ label: "Parkplatz", detail: "Kostenlos, kurzer Fußweg vom Liegeplatz" },
-						{ label: "Haustiere", detail: "An Bord willkommen" },
 						{ label: "Aufenthalt", detail: "Check-in 14:00–19:00 · Check-out vor 11:00 Uhr" },
 					],
 				},
@@ -795,7 +779,6 @@ const dictionary: Record<Language, Translations> = {
 					label: "Zugang & Logistik",
 					items: [
 						{ question: "Ist der Parkplatz wirklich kostenlos und wie weit ist er vom Boot?", answer: "Ja, kostenlos — ein kurzer Fußweg, in der Regel 3–5 Minuten vom Liegeplatz." },
-						{ question: "Sind Haustiere erlaubt?", answer: "Gut erzogene Haustiere sind herzlich willkommen. Der Leinpfad ist ideal für Morgenrunden." },
 					],
 				},
 				{
@@ -944,7 +927,6 @@ const dictionary: Record<Language, Translations> = {
 				"Linnengoed & handdoeken",
 				"Zelf inchecken",
 				"Tot 4 gasten",
-				"Huisdieren welkom",
 				"Verwarming het hele jaar",
 			],
 			minStay: "Min. verblijf",
@@ -959,8 +941,6 @@ const dictionary: Record<Language, Translations> = {
 			inquiryBtn: "Stuur een aanvraag",
 			calNote:
 				"De kalender wordt regelmatig bijgewerkt. Controleer de Airbnb-advertentie voor de meest actuele datums.",
-			petToggle: "Reist u met een huisdier?",
-			petNote: "Assistentiedieren zijn altijd gratis welkom.",
 			available: "Beschikbaar",
 			booked: "Geboekt",
 			months: [
@@ -999,7 +979,6 @@ const dictionary: Record<Language, Translations> = {
 						{ label: "Uitzicht", detail: "Kanaal- en havenzicht vanaf het dek" },
 						{ label: "Buitenterras", detail: "Meubels & eetruimte aan het kanaal" },
 						{ label: "Parkeren", detail: "Gratis, op loopafstand van de aanlegplaats" },
-						{ label: "Huisdieren", detail: "Welkom aan boord" },
 						{ label: "Verblijf", detail: "Inchecken 14:00–19:00 · Uitchecken vóór 11:00" },
 					],
 				},
@@ -1040,7 +1019,6 @@ const dictionary: Record<Language, Translations> = {
 					label: "Toegang & logistiek",
 					items: [
 						{ question: "Is parkeren echt gratis en hoe ver is het van de boot?", answer: "Ja, gratis — op een paar minuten lopen, doorgaans 3 tot 5 minuten van de aanlegplaats." },
-						{ question: "Zijn huisdieren toegestaan?", answer: "Goed opgevoede huisdieren zijn welkom. Het jaagpad is ideaal voor ochtendwandelingen." },
 					],
 				},
 				{

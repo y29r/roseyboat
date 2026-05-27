@@ -43,7 +43,6 @@ const jsonLd: any = {
 	},
 	checkinTime: "15:00",
 	checkoutTime: "11:00",
-	petsAllowed: true,
 	amenityFeature: [
 		{ "@type": "LocationFeatureSpecification", name: "Kitchen", value: true },
 		{ "@type": "LocationFeatureSpecification", name: "Linen provided", value: true },

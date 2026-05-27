@@ -9,7 +9,6 @@ const MIN_NIGHTS: number = 1;
 const MAX_NIGHTS: number = 28;
 const DISCOUNT_THRESHOLD: number = 7;
 const DISCOUNT: number = 0.21;
-const PET_FEE: number = 10;
 
 export type SpinDirection = "up" | "down";
 
@@ -18,7 +17,6 @@ export default function Booking() {
 
 	const [nights, setNights]: [number, React.Dispatch<React.SetStateAction<number>>] = useState<number>(MIN_NIGHTS);
 	const [spinDirection, setSpinDirection]: [SpinDirection, React.Dispatch<React.SetStateAction<SpinDirection>>] = useState<SpinDirection>("up");
-	const [withPet, setWithPet]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
 	const hasDiscount: boolean = nights >= DISCOUNT_THRESHOLD;
 	const total: number = Math.round(RATE_PER_NIGHT * nights * (hasDiscount ? 1 - DISCOUNT : 1));
@@ -98,7 +96,7 @@ export default function Booking() {
 									</div>
 									<div className="text-center sm:text-right">
 										<p className="font-sans text-xs text-muted uppercase tracking-widest mb-0.5">{translations.booking.estimateLabel}</p>
-										<p className="font-serif text-4xl text-canal-green font-light">€{(total + (withPet ? PET_FEE : 0)).toLocaleString()}</p>
+										<p className="font-serif text-4xl text-canal-green font-light">€{total.toLocaleString()}</p>
 										<div
 											className={`overflow-hidden transition-all duration-300 ease-in-out ${hasDiscount ? "max-h-10 opacity-100 mt-3" : "max-h-0 opacity-0"}`}
 										>
@@ -114,23 +112,8 @@ export default function Booking() {
 									</div>
 								</div>
 
-								<label className="mt-4 flex items-start gap-2.5 cursor-pointer group">
-									<input
-										type="checkbox"
-										checked={withPet}
-										onChange={(e) => setWithPet(e.target.checked)}
-										className="mt-0.5 w-4 h-4 accent-canal-green cursor-pointer shrink-0"
-									/>
-									<div>
-										<span className="font-sans text-sm text-dark">
-											{translations.booking.petToggle}
-											<span className="font-medium text-canal-green ml-1.5">+€{PET_FEE}</span>
-										</span>
-										<p className="font-sans text-xs text-muted/70 mt-0.5 mb-4">{translations.booking.petNote}</p>
-									</div>
-								</label>
 								<div className="mb-6 pb-6 border-b border-beige/40">
-									<p className="font-sans text-xs text-muted uppercase tracking-widest mb-3">{translations.booking.includedHeading}</p>
+									<p className="font-sans text-xs text-muted uppercase tracking-widest mb-3 mt-6">{translations.booking.includedHeading}</p>
 									<ul className="grid grid-cols-2 gap-x-4 gap-y-2">
 										{translations.booking.included.map((item: string) => (
 											<li key={item} className="flex items-center gap-2 font-sans text-sm text-dark">
